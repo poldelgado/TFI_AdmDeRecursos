@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Provider;
-
-
-class ProviderController extends Controller
+class TecnicoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +13,7 @@ class ProviderController extends Controller
      */
     public function index()
     {
-        
+        //
     }
 
     /**
@@ -27,7 +24,6 @@ class ProviderController extends Controller
     public function create()
     {
         //
-        return view('providers.create');
     }
 
     /**
@@ -38,27 +34,7 @@ class ProviderController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, array(
-           'name' => 'required|min:5',
-            'cuit' => 'required|integer',
-            'email' => 'required|email',
-            'phone' => 'required|min:5|max:20',
-            'address' => 'required'
-        ));
-
-        $provider = new Provider();
-
-        $provider->name = $request->name;
-        $provider->cuit = $request->cuit;
-        $provider->email = $request->email;
-        $provider->phone = $request->phone;
-        $provider->address = $request->address;
-
-        $provider->save();
-
-        return back()->with('status','Datos cargados correctamente');
-
-
+        //
     }
 
     /**
