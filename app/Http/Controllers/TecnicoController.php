@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Tecnico;
+use Session;
 use Illuminate\Http\Request;
 
 class TecnicoController extends Controller
@@ -23,7 +25,7 @@ class TecnicoController extends Controller
      */
     public function create()
     {
-        //
+        return view('tecnicos.create');
     }
 
     /**
@@ -34,7 +36,27 @@ class TecnicoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, array(
+            'last_name' => 'required|max:30',
+            'first_name' => 'required|max:30',
+            'cuit' => 'required',
+            'phone' => 'required|max:25',
+            'email' => 'required|email'
+        ));
+
+        $tecnico = new Tecnico();
+        $tecnico->last_name = $request->last_name;
+        $tecnico->first_name = $request->first_name;
+        $tecnico->cuit = $request->cuit;
+        $tecnico->phone = $request->phone;
+        $tecnico->email = $request->email;
+        $tecnico->address = $request->address;
+
+        $tecnico->save();
+
+        Session::flash('success', 'El tecnico fue registrado exitosamente');
+
+        return redirect()->route('tecnicos.show', $tecnico->id);
     }
 
     /**

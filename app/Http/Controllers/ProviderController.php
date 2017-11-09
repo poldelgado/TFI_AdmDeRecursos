@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Provider;
+use Session;
 
 
 class ProviderController extends Controller
@@ -56,7 +57,9 @@ class ProviderController extends Controller
 
         $provider->save();
 
-        return back()->with('status','Datos cargados correctamente');
+        Session::flash('success', 'El proveedor fue registrado exitosamente');
+
+        return redirect()->route('providers.show', $provider->id);
 
 
     }
@@ -69,7 +72,8 @@ class ProviderController extends Controller
      */
     public function show($id)
     {
-        //
+        $provider = Provider::find($id);
+        return view('providers.show')->withProvider($provider);
     }
 
     /**
