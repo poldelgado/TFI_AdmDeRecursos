@@ -14,4 +14,9 @@ class Provider extends Model
     {
         return $this->belongsToMany('App\Tecnico');
     }
+
+    public function product()
+    {
+        return $this->belongsToMany('App\Product');
+    }
 }
