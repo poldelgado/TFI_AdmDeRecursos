@@ -18,7 +18,7 @@ class CreateProvidersTable extends Migration
             $table->string('name', 50);
             $table->string('email', 60)->unique();
             $table->string('phone', 30);
-            $table->bigInteger('cuit');
+            $table->bigInteger('cuit')->unique();
             $table->string('address');
             $table->timestamps();
         });

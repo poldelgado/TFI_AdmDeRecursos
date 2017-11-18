@@ -15,6 +15,9 @@ class CreateBuyOrdersTable extends Migration
     {
         Schema::create('buy_orders', function (Blueprint $table) {
             $table->increments('id');
+            $table->date('date_order');
+            $table->double('total');
+            $table->integer('qualification_buy_id')->unsigned();
             $table->timestamps();
         });
     }
