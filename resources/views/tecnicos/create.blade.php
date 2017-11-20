@@ -1,19 +1,9 @@
-@extends('layouts.app')
+@extends('main')
+@section()
 @section('content')
-<div class="col-md-6 col-md-offset-3">
-    @if(count($errors)>0)
-        <div class="alert alert-danger">
-            <p>Corrige los siguientes errores:</p>
-        </div>
-        <ul>
-            @foreach($errors->all() as $message)
-                <li>{{$message}}</li>
-            @endforeach
-        </ul>
-    @endif
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h2>Nuevo Técnico </h2>
+            <h2>Crear Nuevo Técnico</h2>
         </div>
         <div class="panel-body">
             <form action="/tecnicos" method="POST">

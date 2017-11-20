@@ -4,19 +4,9 @@
 
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            @if(count($errors)>0)
-                <div class="alert alert-danger">
-                    <p>Corrige los siguientes errores:</p>
-                </div>
-                <ul>
-                    @foreach($errors->all() as $message)
-                        <li>{{$message}}</li>
-                    @endforeach
-                </ul>
-            @endif
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h2>Modificar Proveedor </h2>
+                    <h2>Modificar Proveedor</h2>
                 </div>
                 <div class="panel-body">
                     <form action="/providers/{{$provider->id}}" method="POST">

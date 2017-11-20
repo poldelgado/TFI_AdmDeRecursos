@@ -15,7 +15,9 @@ class TecnicoController extends Controller
      */
     public function index()
     {
-        //
+        //seleccionar todos los tecnicos
+        $tecnicos = Tecnico::all();
+        return view('tecnicos.index')->withTecnicos($tecnicos);
     }
 
     /**
