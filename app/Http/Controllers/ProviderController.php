@@ -17,6 +17,9 @@ class ProviderController extends Controller
      */
     public function index()
     {
+        $providers = Provider::all();
+
+        return view('providers.index')->withProviders($providers);
         
     }
 
@@ -59,7 +62,7 @@ class ProviderController extends Controller
 
         Session::flash('success', 'El proveedor fue registrado exitosamente');
 
-        return redirect()->route('providers.show', $provider->id);
+        return redirect()->route('providers.index');
 
 
     }
@@ -84,7 +87,11 @@ class ProviderController extends Controller
      */
     public function edit($id)
     {
-        //
+        //buscar el proveedor en la base de datos
+        $provider = Provider::find($id);
+
+        // retornar a la vista con los datos a editar
+        return view('providers.edit')->withProvider($provider);
     }
 
     /**
@@ -96,7 +103,33 @@ class ProviderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //validar los datos
+        $this->validate($request, array(
+            'name' => 'required|max:30',
+            'cuit' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'email' => 'required|email'
+        ));
+
+
+        // guardar los datos en la bbdd
+
+        $provider = Provider::find($id);
+
+        $provider->name = $request->input('name');
+        $provider->cuit = $request->input('cuit');
+        $provider->phone = $request->input('phone');
+        $provider->email = $request->input('email');
+        $provider->address = $request->input('address');
+
+        $provider->save();
+
+        // redireccion con un mensaje flash a providers.show
+
+        Session::flash('success', 'Proveedor actualizado correctamente');
+
+        return redirect()->route('providers.show', $provider->id);
     }
 
     /**
