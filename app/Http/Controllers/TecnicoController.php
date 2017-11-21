@@ -69,7 +69,11 @@ class TecnicoController extends Controller
      */
     public function show($id)
     {
-        //
+        //solicito al modelo el tecnico para el id solicitada
+        $tecnico = Tecnico::find($id);
+
+        //envio a la vista el técnico para ser mostrado
+        return view('tecnicos.show')->withTecnico($tecnico);
     }
 
     /**
@@ -80,7 +84,9 @@ class TecnicoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tecnico = Tecnico::find($id);
+
+        return view('tecnicos.edit')->withTecnico($tecnico);
     }
 
     /**
@@ -92,7 +98,31 @@ class TecnicoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //validar los datos
+        $this->validate($request, array(
+            'first_name' => 'required|max:30',
+            'last_name' => 'required|max:30',
+            'cuit' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'email' => 'required|email'
+        ));
+
+        //buscar el tecnico a modificar
+        $tecnico = Tecnico::find($id);
+        $tecnico->first_name = $request->first_name;
+        $tecnico->last_name = $request->last_name;
+        $tecnico->cuit = $request->cuit;
+        $tecnico->phone = $request->phone;
+        $tecnico->address = $request->address;
+        $tecnico->email = $request->email;
+        $tecnico->save();
+
+        //redireccionar
+
+        Session::flash('success', 'Técnico actualizado correctamente');
+
+        return redirect()->route('tecnicos.index');
     }
 
     /**
@@ -106,7 +136,7 @@ class TecnicoController extends Controller
         $tecnico = Tecnico::find($id);
         $tecnico->delete();
 
-        Session::flash('success', 'Proveedor eliminado correctamente');
+        Session::flash('success', 'Técnico eliminado correctamente');
         return redirect()->route('tecnicos.index');
     }
 }
