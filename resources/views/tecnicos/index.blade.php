@@ -40,7 +40,12 @@
                         <td>{{$tecnico->email}}</td>
                         <td>{{$tecnico->address}}</td>
                         <td><a class="btn btn-sm btn-default" href="{{route('tecnicos.show', $tecnico->id)}}">ver</a>
-                            <a class="btn btn-sm btn-default" href="{{ route('tecnicos.edit', $tecnico->id) }}">Editar</a></td>
+                            <a class="btn btn-sm btn-default" href="{{ route('tecnicos.edit', $tecnico->id) }}">Editar</a>
+                            <form action="{{route('tecnicos.destroy', $tecnico->id)}}" method="POST">
+                                {{csrf_field()}}
+                                {{method_field('DELETE')}}
+                                <input type="submit" value="Eliminar" class="btn btn-danger btn-xs">
+                            </form></td>
                     </tr>
                 @endforeach
                 </tbody>

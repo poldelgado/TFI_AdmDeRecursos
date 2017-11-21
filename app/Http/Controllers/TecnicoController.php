@@ -103,6 +103,10 @@ class TecnicoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tecnico = Tecnico::find($id);
+        $tecnico->delete();
+
+        Session::flash('success', 'Proveedor eliminado correctamente');
+        return redirect()->route('tecnicos.index');
     }
 }

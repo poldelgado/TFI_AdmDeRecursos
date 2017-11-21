@@ -36,10 +36,13 @@
                             <td>{{$provider->address}}</td>
                             <td>{{$provider->phone}}</td>
                             <td>{{$provider->email}}</td>
-                            <td><a class="btn btn-sm btn-primary" href="{{route('providers.show', $provider->id)}}">ver</a>
-                                <a class="btn btn-sm btn-danger" href="{{ route('providers.edit', $provider->id) }}">Editar</a></td>
-
-
+                            <td><a class="btn btn-xs btn-primary" href="{{route('providers.show', $provider->id)}}">ver</a>
+                                <a class="btn btn-xs btn-primary" href="{{ route('providers.edit', $provider->id) }}">Editar</a>
+                                <form action="{{route('providers.destroy', $provider->id)}}" method="POST">
+                                {{csrf_field()}}
+                                {{method_field('DELETE')}}
+                                    <input type="submit" value="Eliminar" class="btn btn-danger btn-xs">
+                                </form>
                         </tr>
 
 

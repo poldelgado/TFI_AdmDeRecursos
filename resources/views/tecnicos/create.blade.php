@@ -1,5 +1,5 @@
 @extends('main')
-@section()
+@section('title', '| Nuevo Técnico')
 @section('content')
     <div class="panel panel-default">
         <div class="panel-heading">

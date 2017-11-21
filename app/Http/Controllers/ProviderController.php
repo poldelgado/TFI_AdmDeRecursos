@@ -140,6 +140,10 @@ class ProviderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $provider = Provider::find($id);
+        $provider->delete();
+
+        Session::flash('success', 'Proveedor eliminado correctamente');
+        return redirect()->route('providers.index');
     }
 }
