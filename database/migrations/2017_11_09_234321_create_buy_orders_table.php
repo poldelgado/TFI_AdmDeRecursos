@@ -13,13 +13,17 @@ class CreateBuyOrdersTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('buy_orders', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date_order');
             $table->double('total');
-            $table->integer('qualification_buy_id')->unsigned();
+            $table->integer('buy_qualification_id')->unsigned();
+            $table->foreign('buy_qualification_id')->references('id')->on('buy_qualification')->onDelete('cascade');
+            $table->date('warranty_void');
             $table->timestamps();
         });
+
     }
 
     /**

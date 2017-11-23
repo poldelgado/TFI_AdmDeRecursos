@@ -17,7 +17,6 @@ class CreateBuyOrderProductTable extends Migration
 
             $table->integer('buy_order_id')->unsigned();
             $table->foreign('buy_order_id')->references('id')->on('buy_orders');
-
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products');
         });

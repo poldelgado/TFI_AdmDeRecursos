@@ -1,0 +1,37 @@
+@extends('main')
+
+@section('content')
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2>Nuevo Producto</h2>
+            </div>
+            <div class="panel-body">
+                <form action="/products" method="POST">
+                    {{csrf_field()}}
+                    <div class="form-group">
+                        <label for="name">Nombre:</label>
+                        <input type="text" name="name" class="form-control" value="{{old('name')}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="cuit">Marca:</label>
+                        <input type="text" name="cuit" class="form-control" value="{{old('cuit')}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Descripción:</label>
+                        <input type="email" name="email" class="form-control" value="{{old('email')}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefono:</label>
+                        <input type="text" name="phone" class="form-control" value="{{old('phone')}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Domicilio:</label>
+                        <input type="text" name="address" class="form-control" value="{{old('address')}}">
+                    </div>
+                    <input type="submit" class="btn btn-success pull-right">
+                </form>
+            </div>
+        </div>
+    </div>
+@endsection
