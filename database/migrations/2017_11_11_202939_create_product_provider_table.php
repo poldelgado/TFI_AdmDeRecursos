@@ -13,6 +13,7 @@ class CreateProductProviderTable extends Migration
      */
     public function up()
     {
+
         Schema::create('product_provider', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->unsigned();

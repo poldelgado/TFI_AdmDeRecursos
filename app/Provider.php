@@ -19,4 +19,9 @@ class Provider extends Model
     {
         return $this->belongsToMany('App\Product');
     }
+
+    public function provider_qualifications()
+    {
+        return $this->hasOne('App\ProviderQualification');
+    }
 }

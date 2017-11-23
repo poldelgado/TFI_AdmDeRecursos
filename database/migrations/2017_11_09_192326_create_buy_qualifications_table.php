@@ -18,6 +18,7 @@ class CreateBuyQualificationsTable extends Migration
             $table->integer('delivery')->unsigned();
             $table->integer('status')->unsigned();
             $table->integer('warranty')->unsigned();
+
             $table->timestamps();
         });
     }
