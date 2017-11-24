@@ -48,9 +48,15 @@ class ProductController extends Controller
 
         $product->save();
 
-        Session::flash('success','Producto registrado exitosamente, de la uri: '.$request->path());
 
-        return redirect()->route('products.index');
+        if ($request->uri == "/products/create"){
+            Session::flash('success','Producto registrado exitosamente');
+            return redirect()->route('products.index');
+        }
+        else{
+            Session::flash('success','Producto registrado exitosamente');
+            return redirect()->route('prod_provs.create');
+        }
     }
 
     /**

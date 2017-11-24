@@ -2,24 +2,26 @@
 
 @section('content')
     <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h2>Nuevo Producto</h2>
-            </div>
-            <div class="panel-body">
-                <form action="/products" method="POST" id="products">
-                    {{csrf_field()}}
-                    <div class="form-group">
-                        <label for="name">Nombre:</label>
-                        <input type="text" name="name" class="form-control" value="{{old('name')}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Descripción</label>
-                        <textarea class="form-control" name="description" cols="40" rows="10" placeholder="Ingrese Texto Aquí"></textarea>
-
-                    </div>
-                    <input type="submit" class="btn btn-success pull-right" value="Crear">
-                </form>
+        <div class="col-md-8-col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2>Nuevo Producto</h2>
+                </div>
+                <div class="panel-body">
+                    <form action="/products" method="POST" id="products">
+                        {{csrf_field()}}
+                        <div class="form-group">
+                            <label for="name">Nombre:</label>
+                            <input type="text" name="name" class="form-control" value="{{old('name')}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Descripción</label>
+                            <textarea class="form-control" name="description" cols="40" rows="10" placeholder="Ingrese Texto Aquí"></textarea>
+                            <input type="hidden" name="uri"  value="{{$_SERVER['REQUEST_URI']}}">
+                        </div>
+                        <input type="submit" class="btn btn-success pull-right" value="Crear">
+                    </form>
+                </div>
             </div>
         </div>
     </div>
