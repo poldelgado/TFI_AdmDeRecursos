@@ -7,29 +7,18 @@
                 <h2>Nuevo Producto</h2>
             </div>
             <div class="panel-body">
-                <form action="/products" method="POST">
+                <form action="/products" method="POST" id="products">
                     {{csrf_field()}}
                     <div class="form-group">
                         <label for="name">Nombre:</label>
                         <input type="text" name="name" class="form-control" value="{{old('name')}}">
                     </div>
                     <div class="form-group">
-                        <label for="cuit">Marca:</label>
-                        <input type="text" name="cuit" class="form-control" value="{{old('cuit')}}">
+                        <label for="description">Descripción</label>
+                        <textarea class="form-control" name="description" cols="40" rows="10" placeholder="Ingrese Texto Aquí"></textarea>
+
                     </div>
-                    <div class="form-group">
-                        <label for="email">Descripción:</label>
-                        <input type="email" name="email" class="form-control" value="{{old('email')}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Telefono:</label>
-                        <input type="text" name="phone" class="form-control" value="{{old('phone')}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Domicilio:</label>
-                        <input type="text" name="address" class="form-control" value="{{old('address')}}">
-                    </div>
-                    <input type="submit" class="btn btn-success pull-right">
+                    <input type="submit" class="btn btn-success pull-right" value="Crear">
                 </form>
             </div>
         </div>

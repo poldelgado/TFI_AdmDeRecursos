@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use Illuminate\Http\Request;
+use Session;
 
 class ProductController extends Controller
 {
@@ -13,7 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+        return view('products.index')->withProducts($products);
     }
 
     /**
@@ -34,7 +37,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, array())
+        $this->validate($request, array(
+            'name' => 'required|max:35',
+            'description' => 'required'
+        ));
+
+        $product = new Product();
+        $product->name = $request->name;
+        $product->description = $request->description;
+
+        $product->save();
+
+        Session::flash('success','Producto registrado exitosamente');
+
+        return redirect()->route('products.index');
     }
 
     /**
@@ -46,6 +62,9 @@ class ProductController extends Controller
     public function show($id)
     {
         //
+        $product = Product::find($id);
+
+        return view('products.show')->withProduct($product);
     }
 
     /**
@@ -56,7 +75,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+
+        return view('products.edit')->withProduct($product);
     }
 
     /**
@@ -68,7 +89,20 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, array(
+            'name' => 'required|max:35',
+            'description' => 'required'
+        ));
+
+        $product = Product::find($id);
+        $product->name = $request->name;
+        $product->description = $request->description;
+
+        $product->save();
+
+        Session::flash('success', 'Producto actualizado exitosamente');
+
+        return redirect()->route('products.index');
     }
 
     /**
@@ -79,6 +113,10 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+
+        Session::flash('success', 'Producto eliminado correctamente');
+        return redirect()->route('products.index');
     }
 }

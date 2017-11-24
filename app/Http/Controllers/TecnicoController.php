@@ -58,7 +58,7 @@ class TecnicoController extends Controller
 
         Session::flash('success', 'El técnico fue registrado exitosamente');
 
-        return redirect()->route('tecnicos.show', $tecnico->id);
+        return redirect()->route('tecnicos.index');
     }
 
     /**
