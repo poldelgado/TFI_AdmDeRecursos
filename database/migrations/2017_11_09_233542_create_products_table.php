@@ -16,8 +16,6 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->date('warranty_void');
-            $table->double('price');
             $table->timestamps();
         });
     }

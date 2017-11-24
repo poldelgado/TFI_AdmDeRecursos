@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class ProviderQualification extends Model
 {
     //
-    public function providers()
+    public function provider()
     {
-        return this->$this->belongsTo('App\Providers');
+        return $this->hasOne('App\Providers');
     }
 }

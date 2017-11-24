@@ -9,7 +9,7 @@ class Tecnico extends Model
     //
 
 
-    public function providers(){
+    public function provider(){
 
         return $this->belongsToMany('App\Provider');
 

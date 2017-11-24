@@ -16,6 +16,6 @@ class BuyOrder extends Model
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function buy_qualification(){
-        return $this->hasOne('App\BuyQualification');
+        return $this->belongsTo('App\BuyQualification');
     }
 }
