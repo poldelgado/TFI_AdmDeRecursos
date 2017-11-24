@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
 use Illuminate\Http\Request;
-use Session;
+use App\Provider;
+use App\Product;
+use App\ProductProvider;
+use Illuminate\Support\Facades\DB;
 
-class ProductController extends Controller
+class ProductProviderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +17,9 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $providers = Provider::all();
         $products = Product::all();
-        return view('products.index')->withProducts($products);
+        return view('prod_provs.index')->withProviders($providers)->withProducts($products);
     }
 
     /**
@@ -26,7 +29,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $providers = Provider::all();
+        $products = Product::all();
+        return view('prod_provs.create')->withProviders($providers)->withProducts($products);
     }
 
     /**
@@ -38,19 +43,19 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, array(
-            'name' => 'required|max:35',
-            'description' => 'required'
+            'product_id' => 'required|integer',
+            'provider_id' => 'required|integer',
+            'price' => 'required',
+            'warranty_months' => 'required|integer',
         ));
 
-        $product = new Product();
-        $product->name = $request->name;
-        $product->description = $request->description;
+        DB::table('product_provider')->insert(
+            ['product_id' => $request->product_id,
+             'provider_id' => $request->provider_id,
+             'price' => $request->price,
+             'warranty_months' => $request->warranty_months]
+        );
 
-        $product->save();
-
-        Session::flash('success','Producto registrado exitosamente, de la uri: '.$request->path());
-
-        return redirect()->route('products.index');
     }
 
     /**
@@ -62,9 +67,6 @@ class ProductController extends Controller
     public function show($id)
     {
         //
-        $product = Product::find($id);
-
-        return view('products.show')->withProduct($product);
     }
 
     /**
@@ -75,9 +77,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::find($id);
-
-        return view('products.edit')->withProduct($product);
+        //
     }
 
     /**
@@ -89,20 +89,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, array(
-            'name' => 'required|max:35',
-            'description' => 'required'
-        ));
-
-        $product = Product::find($id);
-        $product->name = $request->name;
-        $product->description = $request->description;
-
-        $product->save();
-
-        Session::flash('success', 'Producto actualizado exitosamente');
-
-        return redirect()->route('products.index');
+        //
     }
 
     /**
@@ -113,10 +100,6 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::find($id);
-        $product->delete();
-
-        Session::flash('success', 'Producto eliminado correctamente');
-        return redirect()->route('products.index');
+        //
     }
 }

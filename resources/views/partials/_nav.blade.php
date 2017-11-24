@@ -16,9 +16,9 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="@yield('home_link')"><a href="/">Principal<span class="sr-only">(current)</span></a></li>
-                <li class="@yield('blog_link')"><a href="/blog">Proveedores</a></li>
-                <li class="@yield('about_link')"><a href="/about">Nosotros</a></li>
-                <li class="@yield('contact_link')"><a href="/contact">Contactenos</a></li>
+                <li class="@yield('blog_link')"><a href="/providers">Proveedores</a></li>
+                <li class="@yield('about_link')"><a href="/products">Productos</a></li>
+                <li class="@yield('contact_link')"><a href="/tecnicos">Serv. Técnico</a></li>
 
             </ul>
 
@@ -30,9 +30,9 @@
                         <ul class="dropdown-menu">
                             <li><a href="/blog">Blog</a></li>
 
-                            <li><a href="{{ route('posts.index') }}">Posts</a></li>
-                            <li><a href="{{ route('categories.index') }}">Categories</a></li>
-                            <li><a href="{{ route('tags.index') }}">Tags</a></li>
+                            <li><a href="#">Posts</a></li>
+                            <li><a href="#">Categories</a></li>
+                            <li><a href="#">Tags</a></li>
 
                             <li role="separator" class="divider"></li>
                             <li><a href=" {{ route('logout') }} ">Logout</a></li>
