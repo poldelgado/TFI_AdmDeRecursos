@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tecnico;
 use Illuminate\Http\Request;
 
 use App\Provider;
@@ -30,8 +31,8 @@ class ProviderController extends Controller
      */
     public function create()
     {
-        //
-        return view('providers.create');
+        $tecnicos = Tecnico::all();
+        return view('providers.create')->withTecnicos($tecnicos);
     }
 
     /**
@@ -59,6 +60,8 @@ class ProviderController extends Controller
         $provider->address = $request->address;
 
         $provider->save();
+
+        $provider->tecnicos()->sync($request->tecnicos, false);
 
         Session::flash('success', 'El proveedor fue registrado exitosamente');
 

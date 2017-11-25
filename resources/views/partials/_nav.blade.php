@@ -16,9 +16,22 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="@yield('home_link')"><a href="/">Principal<span class="sr-only">(current)</span></a></li>
-                <li class="@yield('blog_link')"><a href="/providers">Proveedores</a></li>
-                <li class="@yield('about_link')"><a href="/products">Productos</a></li>
-                <li class="@yield('contact_link')"><a href="/tecnicos">Serv. Técnico</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Productos <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/products">Lista</a></li>
+                        <li><a href="/products/create">Nuevo Prod</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Proveedores <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/providers">Lista</a></li>
+                        <li><a href="/providers/create">Nuevo Prov</a></li>
+                        <li><a href="/prod_provs/create">Asignar Productos</a></li>
+                    </ul>
+                </li>
+                <li class="@yield('tecnicos_link')"><a href="/tecnicos">Serv. Técnico</a></li>
 
             </ul>
 

@@ -10,12 +10,12 @@ class Provider extends Model
     //
 
 
-    public function tecnico()
+    public function tecnicos()
     {
         return $this->belongsToMany('App\Tecnico');
     }
 
-    public function product()
+    public function products()
     {
         return $this->belongsToMany('App\Product');
     }
