@@ -25,6 +25,7 @@
                     <th>Dirección</th>
                     <th>Teléfono</th>
                     <th>email</th>
+                    <th>Calificación</th>
                 </thead>
                 <tbody>
                     @foreach($providers as $provider)
@@ -36,6 +37,13 @@
                             <td>{{$provider->address}}</td>
                             <td>{{$provider->phone}}</td>
                             <td>{{$provider->email}}</td>
+                            <td>
+                                @if($provider->provider_qualification->average == null)
+                                    Sin Calificar
+                                @else
+                                    {{$provider->provider_qualification->average}}
+                                @endif
+                            </td>
                             <td><a class="btn btn-xs btn-primary" href="{{route('providers.show', $provider->id)}}">ver</a>
                                 <a class="btn btn-xs btn-primary" href="{{ route('providers.edit', $provider->id) }}">Editar</a>
                                 <form action="{{route('providers.destroy', $provider->id)}}" method="POST">

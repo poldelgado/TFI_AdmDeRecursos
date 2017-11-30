@@ -51,7 +51,7 @@ class ProductProviderController extends Controller
             ['product_id' => $request->product_id,
              'provider_id' => $request->provider_id,
        ] );
-
+        return redirect(route('providers.show',$request->provider_id));
     }
 
     /**

@@ -15,9 +15,10 @@ class CreateBuyQualificationsTable extends Migration
     {
         Schema::create('buy_qualifications', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('delivery')->unsigned();
-            $table->integer('status')->unsigned();
-            $table->integer('warranty')->unsigned();
+            $table->integer('delivery')->unsigned()->nullable();
+            $table->integer('status')->unsigned()->nullable();
+            $table->integer('warranty')->unsigned()->nullable();
+            $table->double('average')->unsigned()->nullable();
 
             $table->timestamps();
         });

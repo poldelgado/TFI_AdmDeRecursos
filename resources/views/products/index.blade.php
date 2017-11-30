@@ -9,7 +9,6 @@
             <a href="{{ route('products.create')  }}" class="btn btn-lg btn-block btn-primary btn-h1-spacing">Nuevo Producto</a>
         </div>
         <div class="col-md-12">
-
             <hr>
         </div>
     </div>

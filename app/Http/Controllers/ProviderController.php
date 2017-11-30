@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ProviderQualification;
 use App\Tecnico;
 use Illuminate\Http\Request;
 
@@ -58,6 +59,11 @@ class ProviderController extends Controller
         $provider->email = $request->email;
         $provider->phone = $request->phone;
         $provider->address = $request->address;
+
+        //Creamos un nuevo objeto Calificación de Proveedor
+        $provider_qualification = new ProviderQualification();
+        $provider_qualification->save();
+        $provider->provider_qualification()->associate($provider_qualification); //Asociamos el objeto calificación.
 
         $provider->save();
 
@@ -127,7 +133,6 @@ class ProviderController extends Controller
         $provider->phone = $request->input('phone');
         $provider->email = $request->input('email');
         $provider->address = $request->input('address');
-
 
         $provider->save();
 

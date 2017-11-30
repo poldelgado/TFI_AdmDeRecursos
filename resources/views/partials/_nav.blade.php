@@ -31,6 +31,14 @@
                         <li><a href="/prod_provs/create">Asignar Productos</a></li>
                     </ul>
                 </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ordenes de Compra <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/buy_orders">Lista</a></li>
+                        <li><a href="/buy_orders/create">Nueva Orden</a></li>
+
+                    </ul>
+                </li>
                 <li class="@yield('tecnicos_link')"><a href="/tecnicos">Serv. Técnico</a></li>
 
             </ul>

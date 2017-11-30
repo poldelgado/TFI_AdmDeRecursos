@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\BuyOrder;
+use App\BuyQualification;
 use App\Product;
 use App\Provider;
+use App\ProviderQualification;
 use Illuminate\Http\Request;
 use Session;
 
@@ -17,7 +19,8 @@ class BuyOrderController extends Controller
      */
     public function index()
     {
-        return view('buy_orders.index');
+        $orders = BuyOrder::all();
+        return view('buy_orders.index')->withOrders($orders);
     }
 
     /**
@@ -45,7 +48,7 @@ class BuyOrderController extends Controller
             'date_order' => 'required:date',
             'providers' => 'required',
             'products' => 'required',
-            'warranty_void' =>  'required:integer',
+            'warranty_void' =>  'required:integercontro',
             'total' => 'required'
         ));
 
@@ -55,7 +58,9 @@ class BuyOrderController extends Controller
         $buy_order->product_id = $request->products;
         $buy_order->warranty_void = $request->warranty_void;
         $buy_order->total = $request->total;
-
+        $qualification = new BuyQualification();
+        $qualification->save();
+        $buy_order->buy_qualification()->associate($qualification);
         $buy_order->save();
         Session::flash('success','Orden de Compra registrada exitosamente');
         return redirect()->route('buy_orders.index');
@@ -70,7 +75,9 @@ class BuyOrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = BuyOrder::find($id);
+
+        return view('buy_orders.show')->withOrder($order);
     }
 
     /**
@@ -105,5 +112,56 @@ class BuyOrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function qualificateBuyOrder($id)
+    {
+        $order = BuyOrder::find($id);
+        return view('buy_orders.qualificate_buy_order')->withOrder($order);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateQualification(Request $request, $id)
+    {
+
+        $qualification = BuyQualification::find($id);
+        $qualification->delivery = $request->delivery;
+        $qualification->status = $request->status;
+        $qualification->warranty = $request->warranty;
+        $qualification->average = (double)(($request->delivery+$request->status+$request->warranty)/3);
+        $qualification->save();
+
+        $prov_qual_id = $qualification->buy_order->provider->provider_qualification_id;
+
+        //Actualizar Calificación del proveedor
+        $prov_qual = ProviderQualification::find($prov_qual_id);
+
+
+
+            $buy_orders = BuyOrder::all()->where('provider', $qualification->buy_order->provider);
+            $count = BuyOrder::all()->where('provider', $qualification->buy_order->provider)->count();
+            $delivery = 0;
+            $status = 0;
+            $warranty = 0;
+            foreach($buy_orders as $order)
+            {
+                echo($order->buy_qualification->delivery);
+                $delivery = $delivery + $order->buy_qualification->delivery;
+                $status = $status + $order->buy_qualification->status;
+                $warranty = $warranty + $order->buy_qualification->warranty;
+            }
+            $prov_qual->delivery = floatval($delivery/$count);
+            $prov_qual->status = floatval($status/$count);
+            $prov_qual->warranty = floatval($warranty/$count);
+            $prov_qual->average = ($prov_qual->delivery + $prov_qual->status + $prov_qual->warranty)/3;
+
+
+
+        $prov_qual->save();
+        return redirect()->route('buy_orders.index');
     }
 }

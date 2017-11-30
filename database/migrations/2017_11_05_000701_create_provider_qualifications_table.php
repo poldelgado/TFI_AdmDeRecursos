@@ -15,9 +15,10 @@ class CreateProviderQualificationsTable extends Migration
     {
         Schema::create('provider_qualifications', function (Blueprint $table) {
             $table->increments('id');
-            $table->double('delivery');
-            $table->double('status');
-            $table->double('warranty');
+            $table->double('delivery')->nullable();
+            $table->double('status')->nullable();
+            $table->double('warranty')->nullable();
+            $table->double('average')->nullable();
             $table->timestamps();
         });
     }

@@ -32,3 +32,7 @@ Route::resource('/prod_provs', 'ProductProviderController');
 Route::resource('/buy_orders', 'BuyOrderController');
 
 Route::get('/findProductName', 'ProductController@findProductName')->name('findProductName');
+
+Route::get('/buy_orders/qualificate/{order_id}', 'BuyOrderController@qualificateBuyOrder')->name('qualificateBuyOrder');
+
+Route::put('buy_orders/qualificate/{buy_order_qualification_id}', 'BuyOrderController@updateQualification')->name('qualificationOrderUpdate');
