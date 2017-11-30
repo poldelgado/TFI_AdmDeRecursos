@@ -92,9 +92,11 @@ class ProviderController extends Controller
     {
         //buscar el proveedor en la base de datos
         $provider = Provider::find($id);
+        $tecnicos = Tecnico::all();
+
 
         // retornar a la vista con los datos a editar
-        return view('providers.edit')->withProvider($provider);
+        return view('providers.edit')->withProvider($provider)->withTecnicos($tecnicos);
     }
 
     /**
@@ -126,7 +128,10 @@ class ProviderController extends Controller
         $provider->email = $request->input('email');
         $provider->address = $request->input('address');
 
+
         $provider->save();
+
+        $provider->tecnicos()->sync($request->tecnicos);
 
         // redireccion con un mensaje flash a providers.show
 

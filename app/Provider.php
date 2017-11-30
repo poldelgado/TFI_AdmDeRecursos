@@ -24,4 +24,9 @@ class Provider extends Model
     {
         return $this->belongsTo('App\ProviderQualification');
     }
+
+    public function buy_order()
+    {
+        return $this->hasOne('App\BuyOrder');
+    }
 }

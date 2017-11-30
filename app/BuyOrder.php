@@ -9,7 +9,7 @@ class BuyOrder extends Model
     //
 
     public function product(){
-        return $this->belongsToMany('App\Product');
+        return $this->belongsTo('App\Product');
     }
 
     /**
@@ -17,5 +17,9 @@ class BuyOrder extends Model
      */
     public function buy_qualification(){
         return $this->belongsTo('App\BuyQualification');
+    }
+
+    public function provider(){
+        return $this->belongsTo('App\Provider');
     }
 }

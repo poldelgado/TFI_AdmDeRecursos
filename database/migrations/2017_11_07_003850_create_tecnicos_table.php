@@ -18,7 +18,7 @@ class CreateTecnicosTable extends Migration
             $table->string('last_name', 50);
             $table->string('first_name', 50);
             $table->string('phone', 20);
-            $table->string('email',25);
+            $table->string('email',50);
             $table->string('address',50);
             $table->bigInteger('cuit')->unique();
             $table->timestamps();

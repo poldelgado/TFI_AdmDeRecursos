@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Provider;
 use Illuminate\Http\Request;
 use Session;
 
@@ -124,5 +125,14 @@ class ProductController extends Controller
 
         Session::flash('success', 'Producto eliminado correctamente');
         return redirect()->route('products.index');
+    }
+
+    public function findProductName(Request $request){
+
+        $provider = Provider::find($request->id);
+        $data = $provider->products;
+
+        //request->id this is the id of your chosen option id
+        return response()->json($data);
     }
 }

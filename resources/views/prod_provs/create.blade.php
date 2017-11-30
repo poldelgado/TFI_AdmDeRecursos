@@ -26,15 +26,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="price">Precio:</label>
-                            <input class="form-control" name="price" type="text" placeholder="$00.00">
-                        </div>
-                        <div class="form-group">
-                            <label for="warranty_months">Tiempo de garantía (en meses):</label>
-                            <input class="form-control" name="warranty_months" type="text">
-                        </div>
-
                         <input type="submit" class="btn btn-success pull-right" value="Crear">
                     </form>
                 </div>

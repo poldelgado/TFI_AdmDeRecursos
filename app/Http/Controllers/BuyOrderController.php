@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Provider;
+use App\BuyOrder;
 use App\Product;
-use App\ProductProvider;
-use Illuminate\Support\Facades\DB;
+use App\Provider;
+use Illuminate\Http\Request;
+use Session;
 
-class ProductProviderController extends Controller
+class BuyOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,7 @@ class ProductProviderController extends Controller
      */
     public function index()
     {
-        $providers = Provider::all();
-        $products = Product::all();
-        return view('prod_provs.index')->withProviders($providers)->withProducts($products);
+        return view('buy_orders.index');
     }
 
     /**
@@ -29,9 +27,10 @@ class ProductProviderController extends Controller
      */
     public function create()
     {
-        $providers = Provider::all();
         $products = Product::all();
-        return view('prod_provs.create')->withProviders($providers)->withProducts($products);
+        $providers = Provider::all();
+
+        return view('buy_orders.newOrder')->withProducts($products)->withProviders($providers);
     }
 
     /**
@@ -43,14 +42,23 @@ class ProductProviderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, array(
-            'product_id' => 'required|integer',
-            'provider_id' => 'required|integer',
+            'date_order' => 'required:date',
+            'providers' => 'required',
+            'products' => 'required',
+            'warranty_void' =>  'required:integer',
+            'total' => 'required'
         ));
 
-        DB::table('product_provider')->insert(
-            ['product_id' => $request->product_id,
-             'provider_id' => $request->provider_id,
-       ] );
+        $buy_order = new BuyOrder();
+        $buy_order->date_order = $request->date_order;
+        $buy_order->provider_id = $request->providers;
+        $buy_order->product_id = $request->products;
+        $buy_order->warranty_void = $request->warranty_void;
+        $buy_order->total = $request->total;
+
+        $buy_order->save();
+        Session::flash('success','Orden de Compra registrada exitosamente');
+        return redirect()->route('buy_orders.index');
 
     }
 
@@ -96,6 +104,6 @@ class ProductProviderController extends Controller
      */
     public function destroy($id)
     {
-
+        //
     }
 }

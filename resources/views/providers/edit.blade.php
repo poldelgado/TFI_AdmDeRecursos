@@ -1,5 +1,9 @@
 @extends('main')
 
+@section('stylesheets')
+    <link rel="stylesheet" href="/css/select2.min.css">
+@endsection
+
 @section('content')
 
     <div class="row">
@@ -32,6 +36,16 @@
                             <label for="address">Domicilio:</label>
                             <input type="text" name="address" class="form-control" value="{{$provider->address}}">
                         </div>
+                        <div class="form-group">
+                            <label for="tecnicos">Técnicos Autorizados</label>
+                            <select name="tecnicos[]" class="form-control select2-multi" multiple="multiple">
+                                @foreach($tecnicos as $tecnico)
+
+                                    <option value="{{ $tecnico->id }}"> {{$tecnico->last_name.", ".$tecnico->first_name}} </option>
+
+                                @endforeach
+                            </select>
+                        </div>
                         <input type="submit" class="btn btn-success pull-right" value="Guardar Cambios">
                     </form>
                 </div>
@@ -41,3 +55,10 @@
 
 @endsection
 
+@section('scripts')
+    <script src="/js/select2.min.js"></script>
+    <script>
+        $('.select2-multi').select2();
+        $('.select2-multi').select2().val({!! json_encode($provider->tecnicos()->allRelatedIds()) !!}).trigger('change');
+    </script>
+@endsection

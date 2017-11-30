@@ -28,3 +28,7 @@ Route::resource('/tecnicos', 'TecnicoController');
 Route::resource('/products', 'ProductController');
 
 Route::resource('/prod_provs', 'ProductProviderController');
+
+Route::resource('/buy_orders', 'BuyOrderController');
+
+Route::get('/findProductName', 'ProductController@findProductName')->name('findProductName');

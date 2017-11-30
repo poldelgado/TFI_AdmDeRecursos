@@ -19,9 +19,13 @@
                 $table->date('date_order');
                 $table->double('total');
                 $table->integer('buy_qualification_id')->unsigned()->nullable();
-                $table->date('warranty_void');
+                $table->integer('product_id')->unsigned();
+                $table->integer('provider_id')->unsigned();
+                $table->mediumInteger('warranty_void')->unsigned()->nullable();
                 $table->timestamps();
                 $table->foreign('buy_qualification_id')->references('id')->on('buy_qualifications')->onDelete('cascade');
+                $table->foreign('product_id')->references('id')->on('products');
+                $table->foreign('provider_id')->references('id')->on('providers');
             });
 
         }
