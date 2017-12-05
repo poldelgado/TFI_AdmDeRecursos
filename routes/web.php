@@ -21,18 +21,18 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/providers', 'ProviderController');
+Route::resource('/providers', 'ProviderController')->middleware('auth');
 
-Route::resource('/tecnicos', 'TecnicoController');
+Route::resource('/tecnicos', 'TecnicoController')->middleware('auth');
 
-Route::resource('/products', 'ProductController');
+Route::resource('/products', 'ProductController')->middleware('auth');
 
-Route::resource('/prod_provs', 'ProductProviderController');
+Route::resource('/prod_provs', 'ProductProviderController')->middleware('auth');
 
-Route::resource('/buy_orders', 'BuyOrderController');
+Route::resource('/buy_orders', 'BuyOrderController')->middleware('auth');
 
 Route::get('/findProductName', 'ProductController@findProductName')->name('findProductName');
 
-Route::get('/buy_orders/qualificate/{order_id}', 'BuyOrderController@qualificateBuyOrder')->name('qualificateBuyOrder');
+Route::get('/buy_orders/qualificate/{order_id}', 'BuyOrderController@qualificateBuyOrder')->name('qualificateBuyOrder')->middleware('auth');
 
-Route::put('buy_orders/qualificate/{buy_order_qualification_id}', 'BuyOrderController@updateQualification')->name('qualificationOrderUpdate');
+Route::put('buy_orders/qualificate/{buy_order_qualification_id}', 'BuyOrderController@updateQualification')->name('qualificationOrderUpdate')->middleware('auth');

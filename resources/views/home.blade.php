@@ -13,8 +13,7 @@
                         {{ session('status') }}
                     </div>
                 @endif
-
-                Estás logueado!
+                <h3 class="text-center">Sistema de Gestión de Proveedores</h3>
             </div>
         </div>
     </div>

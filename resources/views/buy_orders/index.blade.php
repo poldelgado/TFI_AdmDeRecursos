@@ -33,12 +33,13 @@
                         <td>{{$order->product->name}}</td>
                         <td>{{$order->warranty_void}}</td>
                         <td>{{$order->provider->name}}</td>
-                        <td>@if($order->buy_qualification->deliver == null && $order->buy_qualification->status == null && $order->buy_qualification->warranty == null)
+                        @if($order->buy_qualification->deliver == null && $order->buy_qualification->status == null && $order->buy_qualification->warranty == null)
+                        <td>
                                 Sin Calificar
-                            @else
-                                {{number_format((float)$order->buy_qualification->average, 1, '.', '')}}
-                            @endif
                         </td>
+                        @else
+                            <td>{{number_format((float)$order->buy_qualification->average, 1, '.', '')}}</td>
+                        @endif
                         <td>
                             <a class="btn btn-xs btn-default" href="{{route('buy_orders.show',$order->id)}}">ver</a>
                         </td>
