@@ -15,9 +15,9 @@ class TechnicianController extends Controller
      */
     public function index()
     {
-        //seleccionar todos los tecnicos
-        $tecnicos = Technician::all();
-        return view('tecnicos.index')->withTechnicians($tecnicos);
+        //seleccionar todos los technicians
+        $technicians = Technician::all();
+        return view('technicians.index')->withTechnicians($technicians);
     }
 
     /**
@@ -27,7 +27,7 @@ class TechnicianController extends Controller
      */
     public function create()
     {
-        return view('tecnicos.create');
+        return view('technicians.create');
     }
 
     /**
@@ -58,7 +58,7 @@ class TechnicianController extends Controller
 
         Session::flash('success', 'El técnico fue registrado exitosamente');
 
-        return redirect()->route('tecnicos.index');
+        return redirect()->route('technicians.index');
     }
 
     /**
@@ -73,7 +73,7 @@ class TechnicianController extends Controller
         $tecnico = Technician::find($id);
 
         //envio a la vista el técnico para ser mostrado
-        return view('tecnicos.show')->withTechnician($tecnico);
+        return view('technicians.show')->withTechnician($tecnico);
     }
 
     /**
@@ -86,7 +86,7 @@ class TechnicianController extends Controller
     {
         $tecnico = Technician::find($id);
 
-        return view('tecnicos.edit')->withTechnician($tecnico);
+        return view('technicians.edit')->withTechnician($tecnico);
     }
 
     /**
@@ -122,7 +122,7 @@ class TechnicianController extends Controller
 
         Session::flash('success', 'Técnico actualizado correctamente');
 
-        return redirect()->route('tecnicos.index');
+        return redirect()->route('technicians.index');
     }
 
     /**
@@ -137,6 +137,6 @@ class TechnicianController extends Controller
         $tecnico->delete();
 
         Session::flash('success', 'Técnico eliminado correctamente');
-        return redirect()->route('tecnicos.index');
+        return redirect()->route('technicians.index');
     }
 }

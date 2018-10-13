@@ -20,7 +20,7 @@ class PurchaseOrderController extends Controller
     public function index()
     {
         $orders = PurchaseOrder::all();
-        return view('buy_orders.index')->withOrders($orders);
+        return view('purchase_orders.index')->withOrders($orders);
     }
 
     /**
@@ -33,7 +33,7 @@ class PurchaseOrderController extends Controller
         $products = Product::all();
         $providers = Provider::all();
 
-        return view('buy_orders.newOrder')->withProducts($products)->withProviders($providers);
+        return view('purchase_orders.newOrder')->withProducts($products)->withProviders($providers);
     }
 
     /**
@@ -63,7 +63,7 @@ class PurchaseOrderController extends Controller
         $buy_order->buy_qualification()->associate($qualification);
         $buy_order->save();
         Session::flash('success','Orden de Compra registrada exitosamente');
-        return redirect()->route('buy_orders.index');
+        return redirect()->route('purchase_orders.index');
 
     }
 
@@ -77,7 +77,7 @@ class PurchaseOrderController extends Controller
     {
         $order = PurchaseOrder::find($id);
 
-        return view('buy_orders.show')->withOrder($order);
+        return view('purchase_orders.show')->withOrder($order);
     }
 
     /**
@@ -117,7 +117,7 @@ class PurchaseOrderController extends Controller
     public function qualificatePurchaseOrder($id)
     {
         $order = PurchaseOrder::find($id);
-        return view('buy_orders.qualificate_buy_order')->withOrder($order);
+        return view('purchase_orders.qualificate_buy_order')->withOrder($order);
     }
 
     /**
@@ -142,12 +142,12 @@ class PurchaseOrderController extends Controller
 
 
 
-            $buy_orders = PurchaseOrder::all()->where('provider', $qualification->buy_order->provider);
+            $purchase_orders = PurchaseOrder::all()->where('provider', $qualification->buy_order->provider);
             $count = PurchaseOrder::all()->where('provider', $qualification->buy_order->provider)->count();
             $delivery = 0;
             $status = 0;
             $warranty = 0;
-            foreach($buy_orders as $order)
+            foreach($purchase_orders as $order)
             {
                 echo($order->buy_qualification->delivery);
                 $delivery = $delivery + $order->buy_qualification->delivery;
@@ -162,6 +162,6 @@ class PurchaseOrderController extends Controller
 
 
         $prov_qual->save();
-        return redirect()->route('buy_orders.index');
+        return redirect()->route('purchase_orders.index');
     }
 }
