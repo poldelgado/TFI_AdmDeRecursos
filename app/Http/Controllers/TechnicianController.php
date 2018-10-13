@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Tecnico;
+use App\Technician;
 use Session;
 use Illuminate\Http\Request;
 
-class TecnicoController extends Controller
+class TechnicianController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class TecnicoController extends Controller
     public function index()
     {
         //seleccionar todos los tecnicos
-        $tecnicos = Tecnico::all();
-        return view('tecnicos.index')->withTecnicos($tecnicos);
+        $tecnicos = Technician::all();
+        return view('tecnicos.index')->withTechnicians($tecnicos);
     }
 
     /**
@@ -46,7 +46,7 @@ class TecnicoController extends Controller
             'email' => 'required|email'
         ));
 
-        $tecnico = new Tecnico();
+        $tecnico = new Technician();
         $tecnico->last_name = $request->last_name;
         $tecnico->first_name = $request->first_name;
         $tecnico->cuit = $request->cuit;
@@ -70,10 +70,10 @@ class TecnicoController extends Controller
     public function show($id)
     {
         //solicito al modelo el tecnico para el id solicitada
-        $tecnico = Tecnico::find($id);
+        $tecnico = Technician::find($id);
 
         //envio a la vista el técnico para ser mostrado
-        return view('tecnicos.show')->withTecnico($tecnico);
+        return view('tecnicos.show')->withTechnician($tecnico);
     }
 
     /**
@@ -84,9 +84,9 @@ class TecnicoController extends Controller
      */
     public function edit($id)
     {
-        $tecnico = Tecnico::find($id);
+        $tecnico = Technician::find($id);
 
-        return view('tecnicos.edit')->withTecnico($tecnico);
+        return view('tecnicos.edit')->withTechnician($tecnico);
     }
 
     /**
@@ -109,7 +109,7 @@ class TecnicoController extends Controller
         ));
 
         //buscar el tecnico a modificar
-        $tecnico = Tecnico::find($id);
+        $tecnico = Technician::find($id);
         $tecnico->first_name = $request->first_name;
         $tecnico->last_name = $request->last_name;
         $tecnico->cuit = $request->cuit;
@@ -133,7 +133,7 @@ class TecnicoController extends Controller
      */
     public function destroy($id)
     {
-        $tecnico = Tecnico::find($id);
+        $tecnico = Technician::find($id);
         $tecnico->delete();
 
         Session::flash('success', 'Técnico eliminado correctamente');

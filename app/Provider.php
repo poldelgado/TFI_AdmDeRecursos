@@ -12,7 +12,7 @@ class Provider extends Model
 
     public function tecnicos()
     {
-        return $this->belongsToMany('App\Tecnico');
+        return $this->belongsToMany('App\Technician');
     }
 
     public function products()
@@ -27,6 +27,6 @@ class Provider extends Model
 
     public function buy_order()
     {
-        return $this->hasOne('App\BuyOrder');
+        return $this->hasOne('App\PurchaseOrder');
     }
 }

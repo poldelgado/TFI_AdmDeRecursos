@@ -31,7 +31,7 @@
                 </div>
                 <div class="panel-footer">
                     @if($order->buy_qualification->deliver == null && $order->buy_qualification->status == null && $order->buy_qualification->warranty == null)
-                        <a class="btn btn-block btn-primary" href="{{route('qualificateBuyOrder',$order->id)}}">Calificar Orden de Compra</a>
+                        <a class="btn btn-block btn-primary" href="{{route('qualificatePurchaseOrder',$order->id)}}">Calificar Orden de Compra</a>
                     @endif
                 </div>
             </div>

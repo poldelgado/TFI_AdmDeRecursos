@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BuyOrder extends Model
+class PurchaseOrder extends Model
 {
     //
 
@@ -16,7 +16,7 @@ class BuyOrder extends Model
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function buy_qualification(){
-        return $this->belongsTo('App\BuyQualification');
+        return $this->belongsTo('App\PurchaseQualification');
     }
 
     public function provider(){

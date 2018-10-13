@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BuyQualification extends Model
+class PurchaseQualification extends Model
 {
     //
     public function buy_order(){
-        return $this->hasOne('App\BuyOrder');
+        return $this->hasOne('App\PurchaseOrder');
     }
 }

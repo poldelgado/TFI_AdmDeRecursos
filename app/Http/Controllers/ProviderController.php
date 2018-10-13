@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ProviderQualification;
-use App\Tecnico;
+use App\Technician;
 use Illuminate\Http\Request;
 
 use App\Provider;
@@ -32,8 +32,8 @@ class ProviderController extends Controller
      */
     public function create()
     {
-        $tecnicos = Tecnico::all();
-        return view('providers.create')->withTecnicos($tecnicos);
+        $tecnicos = Technician::all();
+        return view('providers.create')->withTechnicians($tecnicos);
     }
 
     /**
@@ -98,11 +98,11 @@ class ProviderController extends Controller
     {
         //buscar el proveedor en la base de datos
         $provider = Provider::find($id);
-        $tecnicos = Tecnico::all();
+        $tecnicos = Technician::all();
 
 
         // retornar a la vista con los datos a editar
-        return view('providers.edit')->withProvider($provider)->withTecnicos($tecnicos);
+        return view('providers.edit')->withProvider($provider)->withTechnicians($tecnicos);
     }
 
     /**

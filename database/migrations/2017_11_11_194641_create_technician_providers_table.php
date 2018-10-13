@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProviderTecnicoTable extends Migration
+class CreateTechnicianProvidersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateProviderTecnicoTable extends Migration
      */
     public function up()
     {
-        Schema::create('provider_tecnico', function (Blueprint $table) {
+        Schema::create('technician_providers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('provider_id')->unsigned();
             $table->foreign('provider_id')->references('id')->on('providers');
 
-            $table->integer('tecnico_id')->unsigned();
-            $table->foreign('tecnico_id')->references('id')->on('tecnicos');
+            $table->integer('technician_id')->unsigned();
+            $table->foreign('technician_id')->references('id')->on('technicians');
         });
     }
 
@@ -30,6 +30,6 @@ class CreateProviderTecnicoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('provider_tecnico');
+        Schema::dropIfExists('technician_providers');
     }
 }

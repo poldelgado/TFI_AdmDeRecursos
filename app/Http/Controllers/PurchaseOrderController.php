@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\BuyOrder;
-use App\BuyQualification;
+use App\PurchaseOrder;
+use App\PurchaseQualification;
 use App\Product;
 use App\Provider;
 use App\ProviderQualification;
 use Illuminate\Http\Request;
 use Session;
 
-class BuyOrderController extends Controller
+class PurchaseOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class BuyOrderController extends Controller
      */
     public function index()
     {
-        $orders = BuyOrder::all();
+        $orders = PurchaseOrder::all();
         return view('buy_orders.index')->withOrders($orders);
     }
 
@@ -52,13 +52,13 @@ class BuyOrderController extends Controller
             'total' => 'required'
         ));
 
-        $buy_order = new BuyOrder();
+        $buy_order = new PurchaseOrder();
         $buy_order->date_order = $request->date_order;
         $buy_order->provider_id = $request->providers;
         $buy_order->product_id = $request->products;
         $buy_order->warranty_void = $request->warranty_void;
         $buy_order->total = $request->total;
-        $qualification = new BuyQualification();
+        $qualification = new PurchaseQualification();
         $qualification->save();
         $buy_order->buy_qualification()->associate($qualification);
         $buy_order->save();
@@ -75,7 +75,7 @@ class BuyOrderController extends Controller
      */
     public function show($id)
     {
-        $order = BuyOrder::find($id);
+        $order = PurchaseOrder::find($id);
 
         return view('buy_orders.show')->withOrder($order);
     }
@@ -114,9 +114,9 @@ class BuyOrderController extends Controller
         //
     }
 
-    public function qualificateBuyOrder($id)
+    public function qualificatePurchaseOrder($id)
     {
-        $order = BuyOrder::find($id);
+        $order = PurchaseOrder::find($id);
         return view('buy_orders.qualificate_buy_order')->withOrder($order);
     }
 
@@ -128,7 +128,7 @@ class BuyOrderController extends Controller
     public function updateQualification(Request $request, $id)
     {
 
-        $qualification = BuyQualification::find($id);
+        $qualification = PurchaseQualification::find($id);
         $qualification->delivery = $request->delivery;
         $qualification->status = $request->status;
         $qualification->warranty = $request->warranty;
@@ -142,8 +142,8 @@ class BuyOrderController extends Controller
 
 
 
-            $buy_orders = BuyOrder::all()->where('provider', $qualification->buy_order->provider);
-            $count = BuyOrder::all()->where('provider', $qualification->buy_order->provider)->count();
+            $buy_orders = PurchaseOrder::all()->where('provider', $qualification->buy_order->provider);
+            $count = PurchaseOrder::all()->where('provider', $qualification->buy_order->provider)->count();
             $delivery = 0;
             $status = 0;
             $warranty = 0;

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBuyQualificationsTable extends Migration
+class CreatePurchaseQualificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBuyQualificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('buy_qualifications', function (Blueprint $table) {
+        Schema::create('purchase_qualifications', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('delivery')->unsigned()->nullable();
             $table->integer('status')->unsigned()->nullable();
@@ -31,6 +31,6 @@ class CreateBuyQualificationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('buy_qualifications');
+        Schema::dropIfExists('purchase_qualifications');
     }
 }

@@ -15,6 +15,6 @@ class Product extends Model
 
     public function buy_order()
     {
-        return $this->hasMany('App\BuyOrder');
+        return $this->hasMany('App\PurchaseOrder');
     }
 }
