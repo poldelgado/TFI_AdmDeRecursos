@@ -114,10 +114,10 @@ class PurchaseOrderController extends Controller
         //
     }
 
-    public function qualificatePurchaseOrder($id)
+    public function qualifyPurchaseOrder($id)
     {
         $order = PurchaseOrder::find($id);
-        return view('purchase_orders.qualificate_buy_order')->withOrder($order);
+        return view('purchase_orders.qualify_purchase_order')->withOrder($order);
     }
 
     /**

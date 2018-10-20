@@ -23,16 +23,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/providers', 'ProviderController')->middleware('auth');
 
-Route::resource('/tecnicos', 'TechnicianController')->middleware('auth');
+Route::resource('/technicians', 'TechnicianController')->middleware('auth');
 
 Route::resource('/products', 'ProductController')->middleware('auth');
 
-Route::resource('/prod_provs', 'ProductProviderController')->middleware('auth');
+Route::resource('/products_providers', 'ProductProviderController')->middleware('auth');
 
-Route::resource('/buy_orders', 'PurchaseOrderController')->middleware('auth');
+Route::resource('/purchase_orders', 'PurchaseOrderController')->middleware('auth');
 
 Route::get('/findProductName', 'ProductController@findProductName')->name('findProductName');
 
-Route::get('/buy_orders/qualificate/{order_id}', 'PurchaseOrderController@qualificatePurchaseOrder')->name('qualificatePurchaseOrder')->middleware('auth');
+Route::get('/purchase_orders/qualify/{order_id}', 'PurchaseOrderController@qualifyPurchaseOrder')->name('qualifyPurchaseOrder')->middleware('auth');
 
-Route::put('buy_orders/qualificate/{buy_order_qualification_id}', 'PurchaseOrderController@updateQualification')->name('qualificationOrderUpdate')->middleware('auth');
+Route::put('purchase_orders/qualify/{buy_order_qualification_id}', 'PurchaseOrderController@updateQualification')->name('qualificationOrderUpdate')->middleware('auth');

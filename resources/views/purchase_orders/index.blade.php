@@ -7,7 +7,7 @@
             <h1>Lista de Ordenes de Compra</h1>
         </div>
         <div class="col-md-2">
-            <a href="{{ route('buy_orders.create')  }}" class="btn btn-lg btn-block btn-primary btn-h1-spacing">Nueva Orden</a>
+            <a href="{{ route('purchase_orders.create')  }}" class="btn btn-lg btn-block btn-primary btn-h1-spacing">Nueva Orden</a>
         </div>
         <div class="col-md-12">
             <hr>
@@ -33,15 +33,15 @@
                         <td>{{$order->product->name}}</td>
                         <td>{{$order->warranty_void}}</td>
                         <td>{{$order->provider->name}}</td>
-                        @if($order->buy_qualification->deliver == null && $order->buy_qualification->status == null && $order->buy_qualification->warranty == null)
+                        @if($order->purchase_qualification->deliver == null && $order->purchase_qualification->status == null && $order->purchase_qualification->warranty == null)
                         <td>
                                 Sin Calificar
                         </td>
                         @else
-                            <td>{{number_format((float)$order->buy_qualification->average, 1, '.', '')}}</td>
+                            <td>{{number_format((float)$order->purchase_qualification->average, 1, '.', '')}}</td>
                         @endif
                         <td>
-                            <a class="btn btn-xs btn-default" href="{{route('buy_orders.show',$order->id)}}">ver</a>
+                            <a class="btn btn-xs btn-default" href="{{route('purchase_orders.show',$order->id)}}">ver</a>
                         </td>
                     </tr>
                     @endforeach

@@ -6,9 +6,7 @@
     <title>Tu Aula @yield('title')</title>  <!-- CHANGE TITLE FOR EACH PAGE -->
 
     <!-- Bootstrap -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-
+{{ Html::style('css/bootstrap.min.css') }}
 {{ Html::style('css/styles.css') }}
 
 @yield('stylesheets')

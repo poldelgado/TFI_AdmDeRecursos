@@ -20,7 +20,7 @@
                     <h3>Producto:</h3>
                     <div><span><h4>Nombre: {{$order->product->name}}</h4></span>
                     <h3>Calificar:</h3>
-                    <form action="/buy_orders/qualificate/{{$order->buy_qualification->id}}" method="POST">
+                    <form action="/purchase_orders/qualify/{{$order->buy_qualification->id}}" method="POST">
                         {{method_field('PUT')}}
                         {{csrf_field()}}
                         <div class="form-group">

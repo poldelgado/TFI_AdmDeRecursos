@@ -10,7 +10,7 @@
         </div>
 
         <div class="col-md-2">
-            <a href="{{ route('tecnicos.create')  }}" class="btn btn-lg btn-block btn-primary btn-h1-spacing">Nuevo Técnico</a>
+            <a href="{{ route('technicians.create')  }}" class="btn btn-lg btn-block btn-primary btn-h1-spacing">Nuevo Técnico</a>
         </div>
         <div class="col-md-12">
 
@@ -30,18 +30,18 @@
                 <th>Dirección</th>
                 </thead>
                 <tbody>
-                @foreach($tecnicos as $tecnico)
+                @foreach($technicians as $technician)
                     <tr>
-                        <td>{{$tecnico->id}}</td>
-                        <td>{{$tecnico->last_name}}</td>
-                        <td>{{$tecnico->first_name}}</td>
-                        <td>{{$tecnico->cuit}}</td>
-                        <td>{{$tecnico->phone}}</td>
-                        <td>{{$tecnico->email}}</td>
-                        <td>{{$tecnico->address}}</td>
-                        <td><a class="btn btn-sm btn-default" href="{{route('tecnicos.show', $tecnico->id)}}">ver</a>
-                            <a class="btn btn-sm btn-default" href="{{ route('tecnicos.edit', $tecnico->id) }}">Editar</a>
-                            <form action="{{route('tecnicos.destroy', $tecnico->id)}}" method="POST">
+                        <td>{{$technician->id}}</td>
+                        <td>{{$technician->last_name}}</td>
+                        <td>{{$technician->first_name}}</td>
+                        <td>{{$technician->cuit}}</td>
+                        <td>{{$technician->phone}}</td>
+                        <td>{{$technician->email}}</td>
+                        <td>{{$technician->address}}</td>
+                        <td><a class="btn btn-sm btn-default" href="{{route('technicians.show', $technician->id)}}">ver</a>
+                            <a class="btn btn-sm btn-default" href="{{ route('technicians.edit', $technician->id) }}">Editar</a>
+                            <form action="{{route('technicians.destroy', $technician->id)}}" method="POST">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
                                 <input type="submit" value="Eliminar" class="btn btn-danger btn-xs">

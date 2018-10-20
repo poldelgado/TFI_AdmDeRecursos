@@ -35,11 +35,11 @@
                             <input type="text" name="address" class="form-control" value="{{old('address')}}">
                         </div>
                         <div class="form-group">
-                            <label for="tecnicos">Técnicos Autorizados</label>
-                            <select name="tecnicos[]" class="form-control select2-multi" multiple="multiple">
-                                @foreach($tecnicos as $tecnico)
+                            <label for="technicians">Técnicos Autorizados</label>
+                            <select name="technicians[]" class="form-control select2-multi" multiple="multiple">
+                                @foreach($technicians as $technician)
 
-                                    <option value="{{ $tecnico->id }}"> {{$tecnico->last_name.", ".$tecnico->first_name}} </option>
+                                    <option value="{{ $technician->id }}"> {{$technician->last_name.", ".$technician->first_name}} </option>
 
                                 @endforeach
                             </select>

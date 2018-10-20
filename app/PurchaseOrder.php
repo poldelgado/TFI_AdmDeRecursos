@@ -15,7 +15,7 @@ class PurchaseOrder extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function buy_qualification(){
+    public function purchase_qualification(){
         return $this->belongsTo('App\PurchaseQualification');
     }
 

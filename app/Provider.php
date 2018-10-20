@@ -10,7 +10,7 @@ class Provider extends Model
     //
 
 
-    public function tecnicos()
+    public function technicians()
     {
         return $this->belongsToMany('App\Technician');
     }
@@ -25,7 +25,7 @@ class Provider extends Model
         return $this->belongsTo('App\ProviderQualification');
     }
 
-    public function buy_order()
+    public function purchase_order()
     {
         return $this->hasOne('App\PurchaseOrder');
     }
