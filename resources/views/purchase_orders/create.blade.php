@@ -11,7 +11,7 @@
                     <form action="/purchase_orders" method="POST" id="purchase_orders">
                         {{csrf_field()}}
                         <div class="form-group">
-                            <label for="date_order">Nombre:</label>
+                            <label for="date_order">Fecha:</label>
                             <input type="date" name="date_order" class="form-control" value="{{old('date_order')}}">
                         </div>
                         <div class="form-group">

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTechnicianProvidersTable extends Migration
+class CreateProviderTechnicianTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTechnicianProvidersTable extends Migration
      */
     public function up()
     {
-        Schema::create('technician_providers', function (Blueprint $table) {
+        Schema::create('provider_technician', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('provider_id')->unsigned();
             $table->foreign('provider_id')->references('id')->on('providers');

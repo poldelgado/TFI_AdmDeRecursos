@@ -29,11 +29,11 @@
                 <th>Telefono:</th>
                 </thead>
                 <tbody>
-                @foreach($provider->tecnicos as $tecnico)
+                @foreach($provider->technicians as $technician)
                     <tr>
-                        <td>{{$tecnico->last_name.", ".$tecnico->first_name}}</td>
-                        <td>{{$tecnico->phone}}</td>
-                        <td><a class="btn btn-xs btn-primary" href="{{route('tecnicos.show', $tecnico->id)}}">ver</a></td>
+                        <td>{{$technician->last_name.", ".$technician->first_name}}</td>
+                        <td>{{$technician->phone}}</td>
+                        <td><a class="btn btn-xs btn-primary" href="{{route('technicians.show', $technician->id)}}">ver</a></td>
                     </tr>
                 @endforeach
                 </tbody>

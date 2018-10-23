@@ -30,10 +30,10 @@ class PurchaseOrderController extends Controller
      */
     public function create()
     {
-        $products = Product::all();
-        $providers = Provider::all();
+        $data['products'] = Product::all();
+        $data['providers'] = Provider::all();
 
-        return view('purchase_orders.newOrder')->withProducts($products)->withProviders($providers);
+        return view('purchase_orders.newOrder', $data);
     }
 
     /**
@@ -60,7 +60,7 @@ class PurchaseOrderController extends Controller
         $buy_order->total = $request->total;
         $qualification = new PurchaseQualification();
         $qualification->save();
-        $buy_order->buy_qualification()->associate($qualification);
+        $buy_order->purchase_qualification()->associate($qualification);
         $buy_order->save();
         Session::flash('success','Orden de Compra registrada exitosamente');
         return redirect()->route('purchase_orders.index');

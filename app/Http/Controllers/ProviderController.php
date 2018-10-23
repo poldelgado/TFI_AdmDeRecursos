@@ -46,7 +46,7 @@ class ProviderController extends Controller
     {
         $this->validate($request, array(
            'name' => 'required|min:5',
-            'cuit' => 'required|integer',
+            'cuit' => 'required|numeric',
             'email' => 'required|email',
             'phone' => 'required|min:5|max:20',
             'address' => 'required'
@@ -67,7 +67,7 @@ class ProviderController extends Controller
 
         $provider->save();
 
-        $provider->tecnicos()->sync($request->tecnicos, false);
+        $provider->technicians()->sync($request->tecnicos, false);
 
         Session::flash('success', 'El proveedor fue registrado exitosamente');
 

@@ -18,19 +18,19 @@
                     </div>
                     <h3>Producto: {{$order->product->name}}</h3>
                     <h3>Calificaciones:</h3>
-                    @if($order->buy_qualification->deliver == null && $order->buy_qualification->status == null && $order->buy_qualification->warranty == null)
+                    @if($order->purchase_qualification->deliver == null && $order->purchase_qualification->status == null && $order->purchase_qualification->warranty == null)
                         <h4 class="qual-product">Orden sin calificar</h4>
                     @else
                         <div class="qual-product">
-                            <h4>Envio: {{$order->buy_qualification->delivery}}</h4>
-                            <h4>Estado del Producto: {{$order->buy_qualification->status}}</h4>
-                            <h4>Garantía: {{$order->buy_qualification->warranty}}</h4>
-                            <h4>Calificación Promedio: <strong>{{number_format((float)$order->buy_qualification->average, 1, '.', '')}}</strong></h4>
+                            <h4>Envio: {{$order->purchase_qualification->delivery}}</h4>
+                            <h4>Estado del Producto: {{$order->purchase_qualification->status}}</h4>
+                            <h4>Garantía: {{$order->purchase_qualification->warranty}}</h4>
+                            <h4>Calificación Promedio: <strong>{{number_format((float)$order->purchase_qualification->average, 1, '.', '')}}</strong></h4>
                         </div>
                     @endif
                 </div>
                 <div class="panel-footer">
-                    @if($order->buy_qualification->deliver == null && $order->buy_qualification->status == null && $order->buy_qualification->warranty == null)
+                    @if($order->purchase_qualification->deliver == null && $order->purchase_qualification->status == null && $order->purchase_qualification->warranty == null)
                         <a class="btn btn-block btn-primary" href="{{route('qualifyPurchaseOrder',$order->id)}}">Calificar Orden de Compra</a>
                     @endif
                 </div>

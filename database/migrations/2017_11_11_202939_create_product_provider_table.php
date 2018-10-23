@@ -14,7 +14,7 @@ class CreateProductProviderTable extends Migration
     public function up()
     {
 
-        Schema::create('product_providers', function (Blueprint $table) {
+        Schema::create('product_provider', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products');

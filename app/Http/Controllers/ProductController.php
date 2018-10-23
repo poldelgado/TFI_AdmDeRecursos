@@ -56,7 +56,7 @@ class ProductController extends Controller
         }
         else{
             Session::flash('success','Producto registrado exitosamente');
-            return redirect()->route('prod_provs.create');
+            return redirect()->route('products_providers.create');
         }
     }
 

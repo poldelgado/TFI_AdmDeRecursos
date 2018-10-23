@@ -6,7 +6,7 @@
             <h2>Crear Nuevo Técnico</h2>
         </div>
         <div class="panel-body">
-            <form action="/tecnicos" method="POST">
+            <form action="/technicians" method="POST">
                 {{csrf_field()}}
                 <div class="form-group">
                     <label for="first_name">Nombre:</label>
@@ -32,10 +32,8 @@
                     <label for="address">Domicilio:</label>
                     <input type="text" name="address" class="form-control" value="{{old('address')}}">
                 </div>
-                <input type="submit" class="btn btn-success pull-right">
+                <input type="submit" class="btn btn-success pull-right" value="Guardar">
             </form>
         </div>
     </div>
-</div>
-</div>
 @endsection

@@ -13,10 +13,10 @@
                     <h2>Nueva Orden de Compra</h2>
                 </div>
                 <div class="panel-body">
-                    <form action="/buy_orders" method="POST" id="buy_orders">
+                    <form action="/purchase_orders" method="POST" id="purchase_orders">
                         {{csrf_field()}}
                         <div class="form-group">
-                            <label for="date_order">Nombre:</label>
+                            <label for="date_order">Fecha:</label>
                             <input type="date" name="date_order" class="form-control" value="{{old('date_order')}}">
                         </div>
                         <div class="form-group">
@@ -32,7 +32,9 @@
                             <label for="products">Elegir Producto</label>
                             <select class="form-control"  name="products" id="products">
                                 <option value="0" disabled="true" selected="true">---Productos---</option>
-
+                                @foreach($products as $product)
+                                    <option value="{{$product->id}}">{{$product->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">

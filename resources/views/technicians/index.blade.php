@@ -39,7 +39,7 @@
                         <td>{{$technician->phone}}</td>
                         <td>{{$technician->email}}</td>
                         <td>{{$technician->address}}</td>
-                        <td><a class="btn btn-sm btn-default" href="{{route('technicians.show', $technician->id)}}">ver</a>
+                        <td><a class="btn btn-sm btn-default" href="{{ route('technicians.show', $technician->id)}}">ver</a>
                             <a class="btn btn-sm btn-default" href="{{ route('technicians.edit', $technician->id) }}">Editar</a>
                             <form action="{{route('technicians.destroy', $technician->id)}}" method="POST">
                                 {{csrf_field()}}
