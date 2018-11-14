@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\PurchaseOrder;
 use App\PurchaseQualification;
-use App\ProviderQualification;
 use Illuminate\Http\Request;
 
 class PurchaseOrderController extends Controller {

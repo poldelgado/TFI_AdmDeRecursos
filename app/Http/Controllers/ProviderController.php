@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\ProviderQualification;
 use Illuminate\Http\Request;
 
 use App\Provider;
@@ -16,7 +15,7 @@ class ProviderController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $providers = Provider::with('provider_qualification')->all();
+        $providers = Provider::all();
         $providersWithQualifications = [];
         foreach ($providers as $provider) {
             $providersWithQualifications[] = [
@@ -26,7 +25,7 @@ class ProviderController extends Controller {
                 "phone" => $provider->phone,
                 "cuit" => $provider->cuit,
                 "address" => $provider->address,
-                "qualification" => $provider->provider_qualification()->average,
+                "qualification" => $provider->getQualification(),
             ];
         }
 
@@ -56,14 +55,9 @@ class ProviderController extends Controller {
         $provider->phone = $request->phone;
         $provider->address = $request->address;
 
-        //Creamos un nuevo objeto Calificación de Proveedor
-        $provider_qualification = new ProviderQualification();
-        if ($provider_qualification->save()) {
-            $provider->provider_qualification()->associate($provider_qualification); //Asociamos el objeto calificación.
-            if ($provider->save()) {
-                $provider->technicians()->sync($request->technicians, false);
-                return $this->renderJson(true, null, 'Proveedor registrado exitosamente');
-            }
+        if ($provider->save()) {
+            $provider->technicians()->sync($request->technicians, false);
+            return $this->renderJson(true, null, 'Proveedor registrado exitosamente');
         }
 
         return $this->renderJson(false, null, 'Ocurrió un error al registrar el proveedor');
@@ -85,7 +79,7 @@ class ProviderController extends Controller {
                 "phone" => $provider->phone,
                 "cuit" => $provider->cuit,
                 "address" => $provider->address,
-                "qualification" => $provider->provider_qualification()->average,
+                "qualification" => $provider->getQualification(),
             ];
             return $this->renderJson(true, $provicerWithQualification, 'Proveedor');
         }

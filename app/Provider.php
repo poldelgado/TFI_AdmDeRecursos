@@ -20,13 +20,12 @@ class Provider extends Model
         return $this->belongsToMany('App\Product');
     }
 
-    public function provider_qualification()
+    public function purchaseOrders()
     {
-        return $this->belongsTo('App\ProviderQualification');
+        return $this->hasMany('App\PurchaseOrder');
     }
 
-    public function purchase_order()
-    {
-        return $this->hasOne('App\PurchaseOrder');
+    public function getQualification() {
+        return $this->purchaseOrders()->average('average');
     }
 }
