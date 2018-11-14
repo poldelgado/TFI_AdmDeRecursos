@@ -17,34 +17,20 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             @if (Auth::check())
                 <ul class="nav navbar-nav">
-                    <li class="@yield('home_link')"><a href="/">Principal<span class="sr-only">(current)</span></a></li>
+                    <li class="@yield('home_link')"><a href="/">Inicio<span class="sr-only">(current)</span></a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">Productos <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/products">Lista</a></li>
-                            <li><a href="/products/create">Nuevo Prod</a></li>
-                        </ul>
+                        <a href="{{ route('users.index') }}">Usuarios</a>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">Proveedores <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/providers">Lista</a></li>
-                            <li><a href="/providers/create">Nuevo Proveedor</a></li>
-                            <li><a href="/products_providers/create">Asignar Productos</a></li>
-                        </ul>
+                        <a href="{{ route('products.index') }}">Productos</a>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">Ordenes de Compra <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/purchase_orders">Lista</a></li>
-                            <li><a href="/purchase_orders/create">Nueva Orden</a></li>
-
-                        </ul>
+                        <a href="{{ route('providers.index') }}">Proveedores</a>
                     </li>
-                    <li class="@yield('tecnicos_link')"><a href="/technicians">Serv. Técnico</a></li>
+                    <li class="dropdown">
+                        <a href="{{ route('purchase_orders.index') }}">Órdenes de Compra</a>
+                    </li>
+                    <li class="@yield('tecnicos_link')"><a href="{{ route('technicians.index') }}">Servicio Técnico</a></li>
 
                 </ul>
             @endif
@@ -53,15 +39,8 @@
                 @if (Auth::check())
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">{{ Auth::user()->email }} <span class="caret"></span></a>
+                           aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            {{--<li><a href="/blog">Blog</a></li>--}}
-
-                            {{--<li><a href="#">Posts</a></li>--}}
-                            {{--<li><a href="#">Categories</a></li>--}}
-                            {{--<li><a href="#">Tags</a></li>--}}
-
-                            {{--<li role="separator" class="divider"></li>--}}
                             <li><a href=" {{ route('logout') }} ">Logout</a></li>
                         </ul>
                     </li>
