@@ -5,134 +5,100 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\Provider;
 use Illuminate\Http\Request;
-use Session;
 
-class ProductController extends Controller
-{
+class ProductController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         $products = Product::all();
-        return view('products.index')->withProducts($products);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('products.create');
+        return $this->renderJson(true, $products, 'Listado de Productos');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $this->validate($request, array(
+    public function store(Request $request) {
+        $this->validate($request, [
             'name' => 'required|max:35',
             'description' => 'required'
-        ));
+        ]);
 
         $product = new Product();
         $product->name = $request->name;
         $product->description = $request->description;
 
-        $product->save();
-
-
-        if ($request->uri == "/products/create"){
-            Session::flash('success','Producto registrado exitosamente');
-            return redirect()->route('products.index');
+        if ($product->save()) {
+            return $this->renderJson(true,null, 'Producto registrado exitosamente');
         }
-        else{
-            Session::flash('success','Producto registrado exitosamente');
-            return redirect()->route('products_providers.create');
-        }
+
+        return $this->renderJson(false,null, 'Ocurrió un error al registrar el producto');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id) {
         $product = Product::find($id);
-
-        return view('products.show')->withProduct($product);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $product = Product::find($id);
-
-        return view('products.edit')->withProduct($product);
+        if (isset($product)) {
+            return $this->renderJson(true, $product, 'Producto');
+        }
+        return $this->renderJson(false,null, 'No existe el producto buscado');
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        $this->validate($request, array(
+    public function update(Request $request, $id) {
+        $this->validate($request, [
             'name' => 'required|max:35',
             'description' => 'required'
-        ));
+        ]);
 
         $product = Product::find($id);
         $product->name = $request->name;
         $product->description = $request->description;
 
-        $product->save();
+        if ($product->save()) {
+            return $this->renderJson(true,null, 'El Producto fue actualizado exitosamente');
+        }
 
-        Session::flash('success', 'Producto actualizado exitosamente');
-
-        return redirect()->route('products.index');
+        return $this->renderJson(false,null, 'Ocurrió un error al actualizar el producto');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $product = Product::find($id);
-        $product->delete();
 
-        Session::flash('success', 'Producto eliminado correctamente');
-        return redirect()->route('products.index');
+        if ($product->delete()) {
+            return $this->renderJson(true,null, 'Producto borrado exitosamente');
+        }
+
+        return $this->renderJson(false,null, 'Ocurrió un error al borrar el producto');
     }
 
-    public function findProductName(Request $request){
+    public function findProductName(Request $request) {
 
         $provider = Provider::find($request->id);
-        $data = $provider->products;
 
-        //request->id this is the id of your chosen option id
-        return response()->json($data);
+        return $this->renderJson(true,$provider->products ?? [], 'Listado de productos de ' . $provider->name);
     }
 }

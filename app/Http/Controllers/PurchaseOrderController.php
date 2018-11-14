@@ -4,164 +4,150 @@ namespace App\Http\Controllers;
 
 use App\PurchaseOrder;
 use App\PurchaseQualification;
-use App\Product;
-use App\Provider;
 use App\ProviderQualification;
 use Illuminate\Http\Request;
-use Session;
 
-class PurchaseOrderController extends Controller
-{
+class PurchaseOrderController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $orders = PurchaseOrder::all();
-        return view('purchase_orders.index')->withOrders($orders);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $data['products'] = Product::all();
-        $data['providers'] = Provider::all();
-
-        return view('purchase_orders.newOrder', $data);
+    public function index() {
+        $purchaseOrders = PurchaseOrder::all();
+        $purchaseOrdersComplete = [];
+        foreach ($purchaseOrders as $purchaseOrder) {
+            $purchaseOrdersComplete[] = [
+                "id" => $purchaseOrder->id,
+                "total" => $purchaseOrder->total,
+                "date_order" => $purchaseOrder->date_order,
+                "qualification" => $purchaseOrder->purchase_qualification()->average,
+                "product" => $purchaseOrder->product()->name,
+                "provider" => $purchaseOrder->provider()->name,
+                "warranty_void" => $purchaseOrder->warranty_void,
+            ];
+        }
+        return $this->renderJson(true, $purchaseOrdersComplete, 'Listado de Órdenes de Compra');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $this->validate($request, array(
+    public function store(Request $request) {
+        $this->validate($request, [
             'date_order' => 'required:date',
             'providers' => 'required',
             'products' => 'required',
-            'warranty_void' =>  'required:integercontro',
+            'warranty_void' => 'required:integercontro',
             'total' => 'required'
-        ));
+        ]);
 
-        $buy_order = new PurchaseOrder();
-        $buy_order->date_order = $request->date_order;
-        $buy_order->provider_id = $request->providers;
-        $buy_order->product_id = $request->products;
-        $buy_order->warranty_void = $request->warranty_void;
-        $buy_order->total = $request->total;
+        $purchaseOrder = new PurchaseOrder();
+        $purchaseOrder->date_order = $request->date_order;
+        $purchaseOrder->provider_id = $request->providers;
+        $purchaseOrder->product_id = $request->products;
+        $purchaseOrder->warranty_void = $request->warranty_void;
+        $purchaseOrder->total = $request->total;
         $qualification = new PurchaseQualification();
-        $qualification->save();
-        $buy_order->purchase_qualification()->associate($qualification);
-        $buy_order->save();
-        Session::flash('success','Orden de Compra registrada exitosamente');
-        return redirect()->route('purchase_orders.index');
-
+        if ($qualification->save()) {
+            $purchaseOrder->purchase_qualification()->associate($qualification);
+            if ($purchaseOrder->save()) {
+                return $this->renderJson(true, null, 'Orden de Compra registrada exitosamente');
+            }
+        }
+        return $this->renderJson(false, null, 'Ocurrió un error al registrar la Orden de Compra');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $order = PurchaseOrder::find($id);
+    public function show($id) {
+        $purchaseOrder = PurchaseOrder::find($id);
 
-        return view('purchase_orders.show')->withOrder($order);
+        if (isset($purchaseOrder)) {
+            $purchaseOrderComplete = [
+                "id" => $purchaseOrder->id,
+                "total" => $purchaseOrder->total,
+                "date_order" => $purchaseOrder->date_order,
+                "qualification" => $purchaseOrder->purchase_qualification()->average,
+                "product" => $purchaseOrder->product()->name,
+                "provider" => $purchaseOrder->provider()->name,
+                "warranty_void" => $purchaseOrder->warranty_void,
+            ];
+            return $this->renderJson(true, $purchaseOrderComplete, 'Orden de Compra');
+        }
+        return $this->renderJson(false, null, 'No existe el Orden de Compra buscado');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    public function qualifyPurchaseOrder(Request $request) {
+        $this->validate($request, [
+            'purchase_order_id' => 'required|numeric',
+            'purchase_qualification_delivery' => 'required|numeric',
+            'purchase_qualification_status' => 'required|numeric',
+            'purchase_qualification_warranty' => 'required|numeric',
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public function qualifyPurchaseOrder($id)
-    {
-        $order = PurchaseOrder::find($id);
-        return view('purchase_orders.qualify_purchase_order')->withOrder($order);
+        $purchaseOrder = PurchaseOrder::find($request->purchase_order_id);
+        if (isset($purchaseOrder)) {
+            $qualification = new PurchaseQualification();
+            $qualification->delivery = $request->purchase_qualification_delivery;
+            $qualification->status = $request->purchase_qualification_status;
+            $qualification->warranty = $request->purchase_qualification_warranty;
+            $values = [$qualification->delivery, $qualification->status, $qualification->warranty];
+            $qualification->average = (double) (array_sum($values) / count($values));
+            if ($qualification->save()) {
+                $purchaseOrder->purchase_qualification_id = $qualification->getKey();
+                if ($purchaseOrder->save()) {
+                    return $this->renderJson(true, null, 'La Orden de Compra se calificó correctamente');
+                }
+            }
+            return $this->renderJson(false, null, 'Ocurrío un error al calificar la Orden de Compra');
+        }
+        return $this->renderJson(false, null, 'No existe la Orden de Compra');
     }
 
     /**
      * @param Request $request
-     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function updateQualification(Request $request, $id)
-    {
+    public function updateQualification(Request $request) {
 
-        $qualification = PurchaseQualification::find($id);
-        $qualification->delivery = $request->delivery;
-        $qualification->status = $request->status;
-        $qualification->warranty = $request->warranty;
-        $qualification->average = (double)(($request->delivery+$request->status+$request->warranty)/3);
-        $qualification->save();
+        $this->validate($request, [
+            'purchase_order_id' => 'required|numeric',
+            'purchase_qualification_delivery' => 'required|numeric',
+            'purchase_qualification_status' => 'required|numeric',
+            'purchase_qualification_warranty' => 'required|numeric',
+        ]);
 
-        $prov_qual_id = $qualification->buy_order->provider->provider_qualification_id;
-
-        //Actualizar Calificación del proveedor
-        $prov_qual = ProviderQualification::find($prov_qual_id);
-
-
-
-            $purchase_orders = PurchaseOrder::all()->where('provider', $qualification->buy_order->provider);
-            $count = PurchaseOrder::all()->where('provider', $qualification->buy_order->provider)->count();
-            $delivery = 0;
-            $status = 0;
-            $warranty = 0;
-            foreach($purchase_orders as $order)
-            {
-                echo($order->buy_qualification->delivery);
-                $delivery = $delivery + $order->buy_qualification->delivery;
-                $status = $status + $order->buy_qualification->status;
-                $warranty = $warranty + $order->buy_qualification->warranty;
+        $purchaseOrder = PurchaseOrder::find($request->purchase_order_id);
+        if (isset($purchaseOrder)) {
+            if (isset($purchaseOrder->purchase_qualification_id)) {
+                $qualification = PurchaseQualification::find($purchaseOrder->purchase_qualification_id);
+            } else {
+                $qualification = new PurchaseQualification();
             }
-            $prov_qual->delivery = floatval($delivery/$count);
-            $prov_qual->status = floatval($status/$count);
-            $prov_qual->warranty = floatval($warranty/$count);
-            $prov_qual->average = ($prov_qual->delivery + $prov_qual->status + $prov_qual->warranty)/3;
 
+            $qualification->delivery = $request->purchase_qualification_delivery;
+            $qualification->status = $request->purchase_qualification_status;
+            $qualification->warranty = $request->purchase_qualification_warranty;
+            $values = [$qualification->delivery, $qualification->status, $qualification->warranty];
+            $qualification->average = (double) (array_sum($values) / count($values));
+            if ($qualification->save()) {
+                $purchaseOrder->purchase_qualification_id = $qualification->getKey();
+                if ($purchaseOrder->save()) {
+                    return $this->renderJson(true, null, 'La Orden de Compra se calificó correctamente');
+                }
+            }
+            return $this->renderJson(false, null, 'Ocurrío un error al actualizar la calificación de la Orden de Compra');
+        }
+        return $this->renderJson(false, null, 'No existe la Orden de Compra');
 
-
-        $prov_qual->save();
-        return redirect()->route('purchase_orders.index');
     }
 }

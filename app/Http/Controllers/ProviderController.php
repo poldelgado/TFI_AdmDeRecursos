@@ -3,54 +3,50 @@
 namespace App\Http\Controllers;
 
 use App\ProviderQualification;
-use App\Technician;
 use Illuminate\Http\Request;
 
 use App\Provider;
-use Session;
 
 
-class ProviderController extends Controller
-{
+class ProviderController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $providers = Provider::all();
+    public function index() {
+        $providers = Provider::with('provider_qualification')->all();
+        $providersWithQualifications = [];
+        foreach ($providers as $provider) {
+            $providersWithQualifications[] = [
+                "id" => $provider->id,
+                "name" => $provider->name,
+                "email" => $provider->email,
+                "phone" => $provider->phone,
+                "cuit" => $provider->cuit,
+                "address" => $provider->address,
+                "qualification" => $provider->provider_qualification()->average,
+            ];
+        }
 
-        return view('providers.index')->withProviders($providers);
-        
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $tecnicos = Technician::all();
-        return view('providers.create')->withTechnicians($tecnicos);
+        return $this->renderJson(true, $providersWithQualifications, 'Listado de Proveedores');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $this->validate($request, array(
-           'name' => 'required|min:5',
+    public function store(Request $request) {
+        $this->validate($request, [
+            'name' => 'required|min:5',
             'cuit' => 'required|numeric',
             'email' => 'required|email',
             'phone' => 'required|min:5|max:20',
             'address' => 'required'
-        ));
+        ]);
 
         $provider = new Provider();
 
@@ -62,66 +58,56 @@ class ProviderController extends Controller
 
         //Creamos un nuevo objeto Calificación de Proveedor
         $provider_qualification = new ProviderQualification();
-        $provider_qualification->save();
-        $provider->provider_qualification()->associate($provider_qualification); //Asociamos el objeto calificación.
+        if ($provider_qualification->save()) {
+            $provider->provider_qualification()->associate($provider_qualification); //Asociamos el objeto calificación.
+            if ($provider->save()) {
+                $provider->technicians()->sync($request->technicians, false);
+                return $this->renderJson(true, null, 'Proveedor registrado exitosamente');
+            }
+        }
 
-        $provider->save();
-
-        $provider->technicians()->sync($request->tecnicos, false);
-
-        Session::flash('success', 'El proveedor fue registrado exitosamente');
-
-        return redirect()->route('providers.index');
-
-
+        return $this->renderJson(false, null, 'Ocurrió un error al registrar el proveedor');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         $provider = Provider::find($id);
-        return view('providers.show')->withProvider($provider);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //buscar el proveedor en la base de datos
-        $provider = Provider::find($id);
-        $tecnicos = Technician::all();
-
-
-        // retornar a la vista con los datos a editar
-        return view('providers.edit')->withProvider($provider)->withTechnicians($tecnicos);
+        if (isset($provider)) {
+            $provicerWithQualification = [
+                "id" => $provider->id,
+                "name" => $provider->name,
+                "email" => $provider->email,
+                "phone" => $provider->phone,
+                "cuit" => $provider->cuit,
+                "address" => $provider->address,
+                "qualification" => $provider->provider_qualification()->average,
+            ];
+            return $this->renderJson(true, $provicerWithQualification, 'Proveedor');
+        }
+        return $this->renderJson(false, null, 'No existe el proveedor buscado');
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //validar los datos
-        $this->validate($request, array(
+        $this->validate($request, [
             'name' => 'required|max:30',
             'cuit' => 'required',
             'phone' => 'required',
             'address' => 'required',
             'email' => 'required|email'
-        ));
+        ]);
 
 
         // guardar los datos en la bbdd
@@ -134,29 +120,26 @@ class ProviderController extends Controller
         $provider->email = $request->input('email');
         $provider->address = $request->input('address');
 
-        $provider->save();
+        if ($provider->save()) {
+            $provider->technicians()->sync($request->technicians);
+            return $this->renderJson(true, null, 'El Proveedor fue actualizado exitosamente');
+        }
 
-        $provider->tecnicos()->sync($request->tecnicos);
-
-        // redireccion con un mensaje flash a providers.show
-
-        Session::flash('success', 'Proveedor actualizado correctamente');
-
-        return redirect()->route('providers.show', $provider->id);
+        return $this->renderJson(false, null, 'Ocurrió un error al actualizar el Proveedor');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $provider = Provider::find($id);
-        $provider->delete();
+        if ($provider->delete()) {
+            return $this->renderJson(true, null, 'El Proveedor fue borrado exitosamente');
+        }
 
-        Session::flash('success', 'Proveedor eliminado correctamente');
-        return redirect()->route('providers.index');
+        return $this->renderJson(false, null, 'Ocurrió un error al borrar el Proveedor');
     }
 }
