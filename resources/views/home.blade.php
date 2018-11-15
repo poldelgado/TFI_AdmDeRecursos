@@ -1,8 +1,12 @@
 @extends('main')
 
 @section('content')
+<link rel="stylesheet" type="text/css" href="resources/app-all.css">
+<script type="text/javascript" src="ext-all.js"></script>
+<script type="text/javascript" src="app.js"></script>
 
-<div class="row">
+
+<!--div class="row">
     <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
             <div class="panel-heading">Bienvenido</div>
@@ -17,6 +21,6 @@
             </div>
         </div>
     </div>
-</div>
+</div-->
 
 @endsection
