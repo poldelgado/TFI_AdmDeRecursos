@@ -1,0 +1,55 @@
++--------+-----------+------------------------------------------------------+----------------------------+------------------------------------------------------------------------+--------------+
+| Domain | Method    | URI                                                  | Name                       | Action                                                                 | Middleware   |
++--------+-----------+------------------------------------------------------+----------------------------+------------------------------------------------------------------------+--------------+
+|        | GET|HEAD  | /                                                    |                            | Closure                                                                | web          |
+|        | GET|HEAD  | api/user                                             |                            | Closure                                                                | api,auth:api |
+|        | GET|HEAD  | findProductName                                      | findProductName            | App\Http\Controllers\ProductController@findProductName                 | web          |
+|        | GET|HEAD  | home                                                 | home                       | App\Http\Controllers\HomeController@index                              | web,auth     |
+|        | GET|HEAD  | login                                                | login                      | App\Http\Controllers\Auth\LoginController@showLoginForm                | web,guest    |
+|        | POST      | login                                                |                            | App\Http\Controllers\Auth\LoginController@login                        | web,guest    |
+|        | POST      | logout                                               | logout                     | App\Http\Controllers\Auth\LoginController@logout                       | web          |
+|        | GET|HEAD  | logout                                               |                            | \App\Http\Controllers\Auth\LoginController@logout                      | web          |
+|        | POST      | password/email                                       | password.email             | App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail  | web,guest    |
+|        | POST      | password/reset                                       |                            | App\Http\Controllers\Auth\ResetPasswordController@reset                | web,guest    |
+|        | GET|HEAD  | password/reset                                       | password.request           | App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm | web,guest    |
+|        | GET|HEAD  | password/reset/{token}                               | password.reset             | App\Http\Controllers\Auth\ResetPasswordController@showResetForm        | web,guest    |
+|        | POST      | products                                             | products.store             | App\Http\Controllers\ProductController@store                           | web,auth     |
+|        | GET|HEAD  | products                                             | products.index             | App\Http\Controllers\ProductController@index                           | web,auth     |
+|        | GET|HEAD  | products/create                                      | products.create            | App\Http\Controllers\ProductController@create                          | web,auth     |
+|        | DELETE    | products/{product}                                   | products.destroy           | App\Http\Controllers\ProductController@destroy                         | web,auth     |
+|        | PUT|PATCH | products/{product}                                   | products.update            | App\Http\Controllers\ProductController@update                          | web,auth     |
+|        | GET|HEAD  | products/{product}                                   | products.show              | App\Http\Controllers\ProductController@show                            | web,auth     |
+|        | GET|HEAD  | products/{product}/edit                              | products.edit              | App\Http\Controllers\ProductController@edit                            | web,auth     |
+|        | GET|HEAD  | products_providers                                   | products_providers.index   | App\Http\Controllers\ProductProviderController@index                   | web,auth     |
+|        | POST      | products_providers                                   | products_providers.store   | App\Http\Controllers\ProductProviderController@store                   | web,auth     |
+|        | GET|HEAD  | products_providers/create                            | products_providers.create  | App\Http\Controllers\ProductProviderController@create                  | web,auth     |
+|        | DELETE    | products_providers/{products_provider}               | products_providers.destroy | App\Http\Controllers\ProductProviderController@destroy                 | web,auth     |
+|        | PUT|PATCH | products_providers/{products_provider}               | products_providers.update  | App\Http\Controllers\ProductProviderController@update                  | web,auth     |
+|        | GET|HEAD  | products_providers/{products_provider}               | products_providers.show    | App\Http\Controllers\ProductProviderController@show                    | web,auth     |
+|        | GET|HEAD  | products_providers/{products_provider}/edit          | products_providers.edit    | App\Http\Controllers\ProductProviderController@edit                    | web,auth     |
+|        | POST      | providers                                            | providers.store            | App\Http\Controllers\ProviderController@store                          | web,auth     |
+|        | GET|HEAD  | providers                                            | providers.index            | App\Http\Controllers\ProviderController@index                          | web,auth     |
+|        | GET|HEAD  | providers/create                                     | providers.create           | App\Http\Controllers\ProviderController@create                         | web,auth     |
+|        | DELETE    | providers/{provider}                                 | providers.destroy          | App\Http\Controllers\ProviderController@destroy                        | web,auth     |
+|        | GET|HEAD  | providers/{provider}                                 | providers.show             | App\Http\Controllers\ProviderController@show                           | web,auth     |
+|        | PUT|PATCH | providers/{provider}                                 | providers.update           | App\Http\Controllers\ProviderController@update                         | web,auth     |
+|        | GET|HEAD  | providers/{provider}/edit                            | providers.edit             | App\Http\Controllers\ProviderController@edit                           | web,auth     |
+|        | GET|HEAD  | purchase_orders                                      | purchase_orders.index      | App\Http\Controllers\PurchaseOrderController@index                     | web,auth     |
+|        | POST      | purchase_orders                                      | purchase_orders.store      | App\Http\Controllers\PurchaseOrderController@store                     | web,auth     |
+|        | GET|HEAD  | purchase_orders/create                               | purchase_orders.create     | App\Http\Controllers\PurchaseOrderController@create                    | web,auth     |
+|        | PUT       | purchase_orders/qualify/{buy_order_qualification_id} | qualificationOrderUpdate   | App\Http\Controllers\PurchaseOrderController@updateQualification       | web,auth     |
+|        | GET|HEAD  | purchase_orders/qualify/{order_id}                   | qualifyPurchaseOrder       | App\Http\Controllers\PurchaseOrderController@qualifyPurchaseOrder      | web,auth     |
+|        | GET|HEAD  | purchase_orders/{purchase_order}                     | purchase_orders.show       | App\Http\Controllers\PurchaseOrderController@show                      | web,auth     |
+|        | PUT|PATCH | purchase_orders/{purchase_order}                     | purchase_orders.update     | App\Http\Controllers\PurchaseOrderController@update                    | web,auth     |
+|        | DELETE    | purchase_orders/{purchase_order}                     | purchase_orders.destroy    | App\Http\Controllers\PurchaseOrderController@destroy                   | web,auth     |
+|        | GET|HEAD  | purchase_orders/{purchase_order}/edit                | purchase_orders.edit       | App\Http\Controllers\PurchaseOrderController@edit                      | web,auth     |
+|        | POST      | register                                             |                            | App\Http\Controllers\Auth\RegisterController@register                  | web,guest    |
+|        | GET|HEAD  | register                                             | register                   | App\Http\Controllers\Auth\RegisterController@showRegistrationForm      | web,guest    |
+|        | POST      | technicians                                          | technicians.store          | App\Http\Controllers\TechnicianController@store                        | web,auth     |
+|        | GET|HEAD  | technicians                                          | technicians.index          | App\Http\Controllers\TechnicianController@index                        | web,auth     |
+|        | GET|HEAD  | technicians/create                                   | technicians.create         | App\Http\Controllers\TechnicianController@create                       | web,auth     |
+|        | DELETE    | technicians/{technician}                             | technicians.destroy        | App\Http\Controllers\TechnicianController@destroy                      | web,auth     |
+|        | GET|HEAD  | technicians/{technician}                             | technicians.show           | App\Http\Controllers\TechnicianController@show                         | web,auth     |
+|        | PUT|PATCH | technicians/{technician}                             | technicians.update         | App\Http\Controllers\TechnicianController@update                       | web,auth     |
+|        | GET|HEAD  | technicians/{technician}/edit                        | technicians.edit           | App\Http\Controllers\TechnicianController@edit                         | web,auth     |
++--------+-----------+------------------------------------------------------+----------------------------+------------------------------------------------------------------------+--------------+

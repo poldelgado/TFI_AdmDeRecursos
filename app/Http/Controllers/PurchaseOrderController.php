@@ -31,6 +31,32 @@ class PurchaseOrderController extends Controller {
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getSinCalificar() {
+        $purchaseOrders = PurchaseOrder::leftJoin('purhcase_orders', function($join) {
+            $join->on('purchase_orders.id', '=', 'purchase_qualifications.id');
+        })
+            ->whereNull('purchase_qualifications.id')
+            ->get();
+        $purchaseOrdersComplete = [];
+        foreach ($purchaseOrders as $purchaseOrder) {
+            $purchaseOrdersComplete[] = [
+                "id" => $purchaseOrder->id,
+                "total" => $purchaseOrder->total,
+                "date_order" => $purchaseOrder->date_order,
+//                "qualification" => $purchaseOrder->purchase_qualification()->average,
+                "product" => $purchaseOrder->product()->name,
+                "provider" => $purchaseOrder->provider()->name,
+                "warranty_void" => $purchaseOrder->warranty_void,
+            ];
+        }
+        return $this->renderJson(true, $purchaseOrdersComplete, 'Listado de Órdenes de Compra');
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
