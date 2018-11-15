@@ -37,6 +37,8 @@ Route::resource('/products_providers', 'ProductProviderController')->middleware(
 
 Route::resource('/purchase_orders', 'PurchaseOrderController')->middleware('auth');
 
+Route::get('/purchase_orders/getSinCalificar', 'PurchaseOrderController@getSinCalificar')->middleware('auth');
+
 Route::get('/findProductName', 'ProductController@findProductName')->name('findProductName');
 
 Route::get('/purchase_orders/qualify/{order_id}', 'PurchaseOrderController@qualifyPurchaseOrder')->name('qualifyPurchaseOrder')->middleware('auth');
