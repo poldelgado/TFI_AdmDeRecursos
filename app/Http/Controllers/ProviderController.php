@@ -168,4 +168,19 @@ class ProviderController extends Controller {
 
         return $this->renderJson(false, null, 'Ocurrió un error al intentar obtener la lista de técnicos asociados a proveedor');
     }
+
+    public function detachTechnician(Request $request) {
+        $this->validate($request, [
+            'technician_id' => 'required|integer',
+            'provider_id' => 'required|integer',
+        ]);
+
+        $provider = Provider::find($request->provider_id);
+        if (isset($provider)) {
+            $provider->technicians()->detach($request->technician_id);
+            return $this->renderJson(true, null, 'El Técnico fue desasociado al Proveedor correctamente');
+        }
+
+        return $this->renderJson(true, null, 'Ocurrió un error al desasociar el Técnico con el Proveedor');
+    }
 }

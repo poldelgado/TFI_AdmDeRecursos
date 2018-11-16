@@ -62,4 +62,19 @@ class ProductProviderController extends Controller {
 
         return $this->renderJson(true, null, 'El Producto fue asociado al Proveedor correctamente');
     }
+
+    public function detachProduct(Request $request) {
+        $this->validate($request, [
+            'product_id' => 'required|integer',
+            'provider_id' => 'required|integer',
+        ]);
+
+        $provider = Provider::find($request->provider_id);
+        if (isset($provider)) {
+            $provider->products()->detach($request->product_id);
+            return $this->renderJson(true, null, 'El Producto fue desasociado al Proveedor correctamente');
+        }
+
+        return $this->renderJson(true, null, 'Ocurrió un error al desasociar el Producto con el Proveedor');
+    }
 }

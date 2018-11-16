@@ -25,6 +25,8 @@ Route::post('/providers/associate_technician', 'ProviderController@associateTech
 
 Route::get('/providers/technicians/{provider_id}', 'ProviderController@techniciansList')->middleware('auth');
 
+Route::post('/providers/detach_technician', 'ProviderController@detachTechnician')->middleware('auth');
+
 Route::resource('/providers', 'ProviderController')->middleware('auth');
 
 Route::resource('/technicians', 'TechnicianController')->middleware('auth');
@@ -36,6 +38,8 @@ Route::get('/is_admin', 'UserController@is_admin')->name('is_admin');
 Route::get('/is_logged_in', 'UserController@is_logged_in')->name('is_logged_in');
 
 Route::resource('/products', 'ProductController')->middleware('auth');
+
+Route::get('/products_providers/detach_product', 'ProductProviderController@detachProduct')->middleware('auth');
 
 Route::get('/products_providers/find/{provider_id}', 'ProductProviderController@find')->middleware('auth');
 
