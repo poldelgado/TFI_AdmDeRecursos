@@ -24,7 +24,7 @@ Ext.define('app.view.std.form.Display', {
     viewModel: {
         type: 'std.form.display'
     },
-    fieldLabel: 'Label',
+    fieldLabel: 'Decimal',
     labelAlign: 'right',
     labelWidth: 80,
     value: '',

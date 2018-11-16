@@ -20,6 +20,10 @@ Ext.Loader.setConfig({
 
 
 Ext.application({
+    stores: [
+        'proveedores',
+        'productos'
+    ],
     views: [
         'seguridad.Login',
         'std.form.TxtArea',
