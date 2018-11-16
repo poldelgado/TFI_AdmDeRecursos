@@ -31,9 +31,12 @@ Ext.application({
         'std.form.Ent',
         'std.form.Fch',
         'std.form.SuperComboBox',
-        'procesos.Productos',
-        'procesos.Provedores',
-        'procesos.newPro'
+        'procesos.prod.Productos',
+        'procesos.pve.Provedores',
+        'procesos.prod.NewPro',
+        'procesos.pve.NewPve',
+        'procesos.orden.Ordenes',
+        'procesos.orden.NewOrden'
     ],
     controllers: [
         'std.Glob'

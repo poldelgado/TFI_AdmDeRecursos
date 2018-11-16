@@ -22,13 +22,13 @@ Ext.define('app.controller.std.Glob', {
     ],
 
     statics: {
-        ajax: function(metodo,url ,parm) {
-			if(!parm){parm={};}
-			Ext.Ajax.request({
+        ajax: function(metodo, url, parm) {
+            if(!parm){parm={};}
+            Ext.Ajax.request({
                 url: url,
-				method: metodo, 
+                method: metodo,
                 async: false,
-				params:parm,
+                params:parm,
                 headers: {
                     'Accept': 'application/json'
                 },
@@ -36,43 +36,17 @@ Ext.define('app.controller.std.Glob', {
                 callback: function(options, success, response) {
                     var resp = response.responseText;
                     out = resp;
-					
-					if (resp.constructor === "".constructor) {
-						
-						try {
-							out = Ext.JSON.decode(resp);
-						}
-						catch(err) {
-							
-						}
-						
-					}
-                }
-            });
-			
-            return out;
-        },
 
-        getDataGrid: function(grid) {
-            var aux = [];
-            var fields = grid.store.model.getFields(),
-                data = Ext.pluck(grid.store.data.items, 'data');
-
-            for (var i = 0; i < data.length; i++) {
-                var obj = data[i],
-                    oAux = {};
-                for (var key in obj) {
-                    for (f in fields) {
-                        if (fields[f].name === key && fields[f].persist && fields[f].name !== 'id') {
-                            oAux[key] = obj[key];
+                    if (resp.constructor === "".constructor) {
+                        try {
+                            out = Ext.JSON.decode(resp);
                         }
+                        catch(err) {}
                     }
                 }
-                aux.push(oAux);
-            }
-            data = aux;
+            });
 
-            return data;
+            return out;
         }
     }
 });

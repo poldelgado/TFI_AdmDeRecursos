@@ -18,10 +18,12 @@ Ext.define('app.view.main.viewport', {
     alias: 'widget.viewport',
 
     requires: [
-        'app.view.procesos.Productos',
-        'app.view.procesos.Provedores',
-        'Ext.container.Container',
-        'Ext.button.Button'
+        'app.view.procesos.prod.Productos',
+        'app.view.procesos.pve.Provedores',
+        'app.view.procesos.orden.Ordenes',
+        'Ext.button.Split',
+        'Ext.menu.Menu',
+        'Ext.menu.Item'
     ],
 
     height: 250,
@@ -107,13 +109,55 @@ Ext.define('app.view.main.viewport', {
                         },
                         {
                             xtype: 'button',
+                            handler: function(button, e) {
+                                var menu = button.up('[itemId=menu]');
+                                menu.selectCard(2);
+                            },
                             flex: 1,
                             text: 'Ordenes de Compras'
                         },
                         {
-                            xtype: 'button',
+                            xtype: 'splitbutton',
                             flex: 1,
-                            text: 'Salir'
+                            text: 'Estadisticas',
+                            menu: {
+                                xtype: 'menu',
+                                items: [
+                                    {
+                                        xtype: 'menuitem',
+                                        handler: function(item, e) {
+                                            var menu = button.up('[itemId=menu]');
+                                            menu.selectCard(3);
+                                        },
+                                        width: 165,
+                                        text: 'Grafico 1'
+                                    },
+                                    {
+                                        xtype: 'menuitem',
+                                        handler: function(item, e) {
+                                            var menu = button.up('[itemId=menu]');
+                                            menu.selectCard(4);
+                                        },
+                                        text: 'grafico 2'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            handler: function(button, e) {
+                                Ext.Msg.confirm('Aviso','Esta a punto de salir del sistema  .</br> ¿Desea Continuar?',function(btn){
+                                    if (btn === "yes"){
+
+                                        var ajax = app.controller.std.Glob.ajax,
+                                            json = ajax('GET', 'logout',null);
+                                        location.reload();
+
+                                    }
+                                });
+                            },
+                            flex: 1,
+                            text: 'Logout'
                         }
                     ]
                 }
@@ -130,7 +174,10 @@ Ext.define('app.view.main.viewport', {
                     xtype: 'productos'
                 },
                 {
-                    xtype: 'procesos.provedores'
+                    xtype: 'pve'
+                },
+                {
+                    xtype: 'ordenes'
                 }
             ]
         }

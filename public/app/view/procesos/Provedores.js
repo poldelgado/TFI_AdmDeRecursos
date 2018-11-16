@@ -112,7 +112,7 @@ Ext.define('app.view.procesos.Provedores', {
         }
     ],
     listeners: {
-        afterrender: 'onContainerAfterRender'
+        afterrender: 'iniicales'
     },
 
     iniGrid: function(component, eOpts) {
@@ -144,10 +144,9 @@ Ext.define('app.view.procesos.Provedores', {
                 component.reconfigure(store);
     },
 
-    onContainerAfterRender: function(component, eOpts) {
-        var json = {'success':true,
-                    'data':[{id:1,name:'Gensys SA',cuit:23311800779}],
-                    'msg':'Listado de Productos'};
+    iniicales: function(component, eOpts) {
+        var ajax = app.controller.std.Glob.ajax,
+             json = ajax('GET', 'providers',null);
 
 
         var grid = component.down('grid');

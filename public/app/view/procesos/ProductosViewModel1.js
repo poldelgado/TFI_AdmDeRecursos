@@ -15,6 +15,6 @@
 
 Ext.define('app.view.procesos.ProductosViewModel1', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.procesos.provedores'
+    alias: 'viewmodel.procesos.pve.provedores'
 
 });

@@ -24,8 +24,7 @@ class ProviderController extends Controller {
                 "email" => $provider->email,
                 "phone" => $provider->phone,
                 "cuit" => $provider->cuit,
-                "address" => $provider->address,
-                "qualification" => $provider->getQualification(),
+                "address" => $provider->address//,"qualification" => $provider->getQualification()
             ];
         }
 
