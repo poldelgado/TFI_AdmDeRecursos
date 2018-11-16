@@ -20,10 +20,12 @@ Ext.define('app.view.procesos.orden.NewOrden', {
     requires: [
         'app.view.procesos.orden.NewOrdenViewModel',
         'app.view.std.form.Ent',
+        'app.view.std.form.Fch',
         'app.view.std.form.CUIT',
         'app.view.std.form.Txt',
         'Ext.form.Panel',
         'Ext.form.field.Number',
+        'Ext.form.field.Date',
         'Ext.toolbar.Toolbar',
         'Ext.button.Button'
     ],
@@ -56,6 +58,12 @@ Ext.define('app.view.procesos.orden.NewOrden', {
                     hidden: true,
                     labelWidth: 100,
                     name: 'id'
+                },
+                {
+                    xtype: 'fch',
+                    flex: 1,
+                    labelWidth: 100,
+                    name: 'date_order'
                 },
                 {
                     xtype: 'cuit',

@@ -38,8 +38,8 @@ Ext.define('app.controller.std.Glob', {
                     var resp = response.responseText;
                     if (resp.constructor === "".constructor) {
                         try {
-                            out = Ext.JSON.decode(resp);
-                            isLogged = true;
+                            var json = Ext.JSON.decode(resp);
+                            isLogged = json.success;
                         }
                         catch(err) {}
                     }

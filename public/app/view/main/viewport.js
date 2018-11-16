@@ -33,22 +33,22 @@ Ext.define('app.view.main.viewport', {
     defaultListenerScope: true,
 
     layout: {
-        type: 'hbox',
+        type: 'vbox',
         align: 'stretch'
     },
     items: [
         {
             xtype: 'container',
-            flex: 1,
             width: 199,
             layout: {
-                type: 'vbox',
-                align: 'stretch'
+                type: 'hbox',
+                align: 'bottom'
             },
             items: [
                 {
                     xtype: 'container',
                     margin: '10 0 0 0',
+                    width: 200,
                     layout: {
                         type: 'hbox',
                         align: 'stretch'
@@ -85,13 +85,20 @@ Ext.define('app.view.main.viewport', {
                             layout = card.getLayout();
                         layout.setActiveItem(id);
                     },
+                    flex: 1,
+                    flex: 0,
                     itemId: 'menu',
-                    margin: '20 0 0 0 ',
+                    margin: '20 0 0 35',
                     layout: {
-                        type: 'vbox',
+                        type: 'hbox',
                         align: 'stretch'
                     },
                     items: [
+                        {
+                            xtype: 'container',
+                            flex: 1,
+                            flex: 1
+                        },
                         {
                             xtype: 'button',
                             handler: function(button, e) {
