@@ -21,6 +21,8 @@ Ext.define('app.view.main.viewport', {
         'app.view.procesos.prod.Productos',
         'app.view.procesos.pve.Provedores',
         'app.view.procesos.orden.Ordenes',
+        'app.view.procesos.tec.Tecnicos',
+        'app.view.procesos.usr.Usuarios',
         'Ext.button.Split',
         'Ext.menu.Menu',
         'Ext.menu.Item'
@@ -117,6 +119,24 @@ Ext.define('app.view.main.viewport', {
                             text: 'Ordenes de Compras'
                         },
                         {
+                            xtype: 'button',
+                            handler: function(button, e) {
+                                var menu = button.up('[itemId=menu]');
+                                menu.selectCard(3);
+                            },
+                            flex: 1,
+                            text: 'Tecnicos'
+                        },
+                        {
+                            xtype: 'button',
+                            handler: function(button, e) {
+                                var menu = button.up('[itemId=menu]');
+                                menu.selectCard(4);
+                            },
+                            flex: 1,
+                            text: 'Usuarios'
+                        },
+                        {
                             xtype: 'splitbutton',
                             flex: 1,
                             text: 'Estadisticas',
@@ -151,7 +171,7 @@ Ext.define('app.view.main.viewport', {
 
                                         var ajax = app.controller.std.Glob.ajax,
                                             json = ajax('GET', 'logout',null);
-                                        location.reload();
+                                        window.open('login','_self');
 
                                     }
                                 });
@@ -178,6 +198,12 @@ Ext.define('app.view.main.viewport', {
                 },
                 {
                     xtype: 'ordenes'
+                },
+                {
+                    xtype: 'tecnicos'
+                },
+                {
+                    xtype: 'usuarios'
                 }
             ]
         }

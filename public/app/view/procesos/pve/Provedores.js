@@ -18,13 +18,19 @@ Ext.define('app.view.procesos.pve.Provedores', {
     alias: 'widget.pve',
 
     requires: [
+        'app.view.procesos.pve.ProvedoresViewModel',
+        'app.view.std.grid.filter',
         'Ext.button.Button',
+        'Ext.form.field.Text',
         'Ext.grid.Panel',
         'Ext.grid.column.Number',
         'Ext.view.Table',
         'Ext.grid.column.Action'
     ],
 
+    viewModel: {
+        type: 'pve'
+    },
     defaultListenerScope: true,
 
     layout: {
@@ -52,6 +58,17 @@ Ext.define('app.view.procesos.pve.Provedores', {
                     icon: 'img/add.png',
                     iconAlign: 'right',
                     text: 'Nuevo'
+                },
+                {
+                    xtype: 'button',
+                    handler: function(button, e) {
+                        window.open('export_providers','_blank');
+
+                    },
+                    margin: '0 0 0 5',
+                    icon: 'img/exp.png',
+                    iconAlign: 'right',
+                    text: 'Exportar'
                 }
             ]
         },
@@ -63,6 +80,11 @@ Ext.define('app.view.procesos.pve.Provedores', {
                 align: 'stretch'
             },
             items: [
+                {
+                    xtype: 'filter',
+                    margin: '3 0 0 0',
+                    flex: 0
+                },
                 {
                     xtype: 'gridpanel',
                     loadGrid: function() {
@@ -92,8 +114,10 @@ Ext.define('app.view.procesos.pve.Provedores', {
                     columns: [
                         {
                             xtype: 'numbercolumn',
+                            width: 57,
                             dataIndex: 'id',
-                            text: '#'
+                            text: '#',
+                            format: '0,000'
                         },
                         {
                             xtype: 'gridcolumn',
@@ -113,15 +137,12 @@ Ext.define('app.view.procesos.pve.Provedores', {
                             items: [
                                 {
                                     handler: function(view, rowIndex, colIndex, item, e, record, row) {
-										console.log('prove');                                       
-									   var win = Ext.widget('newpve'),
+                                        var win = Ext.widget('newpve'),
                                             frm = win.down('form');
-										
+
                                         frm.loadRecord(record);
                                         win.show();
-                                        win.on('close',function(){
-											view.up().loadGrid()
-											});
+                                        win.on('close',function(){view.up().loadGrid();});
                                     },
                                     icon: 'img/search.png'
                                 }
@@ -141,7 +162,7 @@ Ext.define('app.view.procesos.pve.Provedores', {
 
                                                 if(json.success){
                                                     Ext.Msg.alert('Aviso','Elemento Eliminado');
-                                                    view.loadGrid();
+                                                    view.up().loadGrid();
                                                 }else{
                                                     Ext.Msg.alert('Error','Error en eliminar registro' + json.msg);
                                                 }

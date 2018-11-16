@@ -18,13 +18,19 @@ Ext.define('app.view.procesos.prod.Productos', {
     alias: 'widget.productos',
 
     requires: [
+        'app.view.procesos.prod.ProductosViewModel',
+        'app.view.std.grid.filter',
         'Ext.button.Button',
+        'Ext.form.field.Text',
         'Ext.grid.Panel',
         'Ext.grid.column.Number',
         'Ext.view.Table',
         'Ext.grid.column.Action'
     ],
 
+    viewModel: {
+        type: 'productos'
+    },
     defaultListenerScope: true,
 
     layout: {
@@ -38,13 +44,30 @@ Ext.define('app.view.procesos.prod.Productos', {
                 {
                     xtype: 'button',
                     handler: function(button, e) {
-                        var win = Ext.widget('newpro'),
+                        var con = button.up('productos'),
+                            grid = con.down('grid'),
+                            win = Ext.widget('newpro'),
                             frm = win.down('form');
                         win.show();
+
+
+                        win.on('close',function(){grid.loadGrid();});
                     },
                     icon: 'img/add.png',
                     iconAlign: 'right',
                     text: 'Nuevo'
+                },
+                {
+                    xtype: 'button',
+                    handler: function(button, e) {
+
+                        window.open('export_products','_blank');
+
+                    },
+                    margin: '0 0 0 5',
+                    icon: 'img/exp.png',
+                    iconAlign: 'right',
+                    text: 'Exportar'
                 }
             ]
         },
@@ -57,15 +80,43 @@ Ext.define('app.view.procesos.prod.Productos', {
             },
             items: [
                 {
+                    xtype: 'filter',
+                    margin: '3 0 0 0',
+                    margins: ''
+                },
+                {
                     xtype: 'gridpanel',
+                    loadGrid: function() {
+                        var ajax = app.controller.std.Glob.ajax,
+                            json = ajax('GET', 'products',null);
+
+
+
+                        var grid = this;
+
+
+                        if(json.success){
+                            grid.store.add(json.data);
+                        }else{
+                            Ext.toast({
+                                html: 'Sin datos para esta vista',
+                                title: 'Info',
+                                width: 200,
+                                align: 't',
+                                autoClose: true
+                            });
+                        }
+
+                    },
                     flex: 1,
-                    margin: '3 0 0 0 ',
                     title: 'Productos',
                     columns: [
                         {
                             xtype: 'numbercolumn',
+                            width: 62,
                             dataIndex: 'id',
-                            text: '#'
+                            text: '#',
+                            format: '0,000'
                         },
                         {
                             xtype: 'gridcolumn',
@@ -90,7 +141,7 @@ Ext.define('app.view.procesos.prod.Productos', {
 
                                         frm.loadRecord(record);
                                         win.show();
-
+                                        win.on('close',function(){view.up().loadGrid();});
                                     },
                                     icon: 'img/search.png'
                                 }
@@ -110,7 +161,7 @@ Ext.define('app.view.procesos.prod.Productos', {
 
                                                 if(json.success){
                                                     Ext.Msg.alert('Aviso','Elemento Eliminado');
-                                                    view.store.load();
+                                                    view.up().loadGrid();
                                                 }else{
                                                     Ext.Msg.alert('Error','Error en eliminar registro' + json.msg);
                                                 }
@@ -164,35 +215,9 @@ Ext.define('app.view.procesos.prod.Productos', {
     },
 
     onContainerAfterRender: function(component, eOpts) {
-        var json = {'success':true,
-                    'data':[{id:1,name:'Producto1',description:'descripcion 1'},
-                           {id:2,name:'Producto1',description:'descripcion 1'},
-                           {id:3,name:'Producto1',description:'descripcion 1'}],
-                    'msg':'Listado de Productos'};
-
-
-         var ajax = app.controller.std.Glob.ajax,
-             json = ajax('GET', 'products',null);
-
-
-
         var grid = component.down('grid');
 
-
-        if(json.success){
-            grid.store.add(json.data);
-        }else{
-            Ext.toast({
-                html: 'Sin datos para esta vista',
-                title: 'Info',
-                width: 200,
-                align: 't',
-                autoClose: true
-            });
-        }
-
-
-
+        grid.loadGrid();
 
     }
 

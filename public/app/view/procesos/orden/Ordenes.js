@@ -18,13 +18,19 @@ Ext.define('app.view.procesos.orden.Ordenes', {
     alias: 'widget.ordenes',
 
     requires: [
+        'app.view.procesos.orden.OrdenesViewModel',
+        'app.view.std.grid.filter',
         'Ext.button.Button',
+        'Ext.form.field.Text',
         'Ext.grid.Panel',
         'Ext.grid.column.Number',
         'Ext.view.Table',
         'Ext.grid.column.Action'
     ],
 
+    viewModel: {
+        type: 'ordenes'
+    },
     defaultListenerScope: true,
 
     layout: {
@@ -45,6 +51,17 @@ Ext.define('app.view.procesos.orden.Ordenes', {
                     icon: 'img/add.png',
                     iconAlign: 'right',
                     text: 'Nuevo'
+                },
+                {
+                    xtype: 'button',
+                    handler: function(button, e) {
+                        window.open('export_purchase_orders','_blank');
+
+                    },
+                    margin: '0 0 0 5',
+                    icon: 'img/exp.png',
+                    iconAlign: 'right',
+                    text: 'Exportar'
                 }
             ]
         },
@@ -57,15 +74,21 @@ Ext.define('app.view.procesos.orden.Ordenes', {
             },
             items: [
                 {
+                    xtype: 'filter',
+                    margin: '3 0 0 0 ',
+                    flex: 0
+                },
+                {
                     xtype: 'gridpanel',
                     flex: 1,
-                    margin: '3 0 0 0 ',
                     title: 'Ordenes de Compras',
                     columns: [
                         {
                             xtype: 'numbercolumn',
+                            width: 67,
                             dataIndex: 'id',
-                            text: '#'
+                            text: '#',
+                            format: '0,000'
                         },
                         {
                             xtype: 'gridcolumn',

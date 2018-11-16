@@ -66,13 +66,13 @@ class UserController extends Controller {
      */
     public function update(Request $request, $id) {
         $this->validate($request, [
-            'name' => 'required|max:35',
-            'description' => 'required'
+            'name' => 'required|max:35'
         ]);
 
         $user = User::find($id);
         $user->name = $request->name;
-        $user->description = $request->description;
+        $user->email = $request->email;
+		$user->admin = $request->admin;
 
         if ($user->save()) {
             return $this->renderJson(true, null, 'El Usuario fue actualizado exitosamente');

@@ -36,7 +36,12 @@ Ext.application({
         'procesos.prod.NewPro',
         'procesos.pve.NewPve',
         'procesos.orden.Ordenes',
-        'procesos.orden.NewOrden'
+        'procesos.orden.NewOrden',
+        'procesos.tec.NewTec',
+        'procesos.tec.Tecnicos',
+        'procesos.usr.Usuarios',
+        'procesos.usr.NewUsr',
+        'std.grid.filter'
     ],
     controllers: [
         'std.Glob'
