@@ -25,8 +25,8 @@ class TechniciansExport implements FromCollection, WithMapping, ShouldAutoSize {
             $model->phone,
             $model->email,
             $model->address,
-            $model->created_at->format('d/m/Y H:i'),
-            $model->updated_at->format('d/m/Y H:i'),
+            isset($model->created_at) ? $model->created_at->format('d/m/Y H:i') : '',
+            isset($model->updated_at) ? $model->updated_at->format('d/m/Y H:i') : '',
         ];
     }
 }

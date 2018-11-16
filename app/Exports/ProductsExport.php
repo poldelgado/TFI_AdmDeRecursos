@@ -21,8 +21,8 @@ class ProductsExport implements FromCollection, WithMapping, ShouldAutoSize {
             $model->id,
             $model->name,
             $model->description,
-            $model->created_at->format('d/m/Y H:i'),
-            $model->updated_at->format('d/m/Y H:i'),
+            isset($model->created_at) ? $model->created_at->format('d/m/Y H:i') : '',
+            isset($model->updated_at) ? $model->updated_at->format('d/m/Y H:i') : '',
         ];
     }
 }

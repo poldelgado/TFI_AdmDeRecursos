@@ -28,8 +28,8 @@ class PurchaseOrdersExport implements FromCollection, WithMapping, ShouldAutoSiz
             $model->purchase_qualification()->delivery,
             $model->purchase_qualification()->warranty,
             $model->purchase_qualification()->average,
-            $model->created_at->format('d/m/Y H:i'),
-            $model->updated_at->format('d/m/Y H:i'),
+            isset($model->created_at) ? $model->created_at->format('d/m/Y H:i') : '',
+            isset($model->updated_at) ? $model->updated_at->format('d/m/Y H:i') : '',
         ];
     }
 }
