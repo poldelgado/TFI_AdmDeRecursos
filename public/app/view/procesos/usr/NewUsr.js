@@ -65,8 +65,7 @@ Ext.define('app.view.procesos.usr.NewUsr', {
                     allowBlank: false,
                     enforceMaxLength: true,
                     minLength: 5,
-                    minLengthText: '80',
-                    vtype: 'alpha'
+                    minLengthText: '80'
                 },
                 {
                     xtype: 'txt',

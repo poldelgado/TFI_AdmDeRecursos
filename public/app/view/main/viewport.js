@@ -23,6 +23,7 @@ Ext.define('app.view.main.viewport', {
         'app.view.procesos.orden.Ordenes',
         'app.view.procesos.tec.Tecnicos',
         'app.view.procesos.usr.Usuarios',
+        'app.view.procesos.pveprd.PvePrd',
         'Ext.button.Split',
         'Ext.menu.Menu',
         'Ext.menu.Item'
@@ -147,6 +148,36 @@ Ext.define('app.view.main.viewport', {
                         {
                             xtype: 'splitbutton',
                             flex: 1,
+                            text: 'Vinculos',
+                            menu: {
+                                xtype: 'menu',
+                                width: 120,
+                                items: [
+                                    {
+                                        xtype: 'menuitem',
+                                        width: 250,
+                                        text: 'Provedoes - Productos',
+                                        listeners: {
+                                            click: 'onMenuitemClick'
+                                        }
+                                    },
+                                    {
+                                        xtype: 'menuitem',
+                                        text: 'Proveedores - Tecnicos',
+                                        listeners: {
+                                            click: 'onMenuitemClick1'
+                                        }
+                                    },
+                                    {
+                                        xtype: 'menuitem',
+                                        text: 'Menu Item'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            xtype: 'splitbutton',
+                            flex: 1,
                             itemId: 'estadisticas',
                             text: 'Estadisticas',
                             menu: {
@@ -216,10 +247,23 @@ Ext.define('app.view.main.viewport', {
                 },
                 {
                     xtype: 'usuarios'
+                },
+                {
+                    xtype: 'pveprd'
                 }
             ]
         }
     ],
+
+    onMenuitemClick: function(item, e, eOpts) {
+        var menu = item.up('[itemId=menu]');
+        menu.selectCard(5);
+    },
+
+    onMenuitemClick1: function(item, e, eOpts) {
+        var menu = item.up('[itemId=menu]');
+                menu.selectCard(6);
+    },
 
     onMenuAfterRender: function(component, eOpts) {
         var ajax = app.controller.std.Glob.ajax,

@@ -34,9 +34,9 @@ class ProductProviderController extends Controller {
         $provider = Provider::find((int) $id);
 
         if (isset($provider)) {
-            $providerInfo['cuit'] = $provider->cuit;
-            $providerInfo['name'] = $provider->name;
-            $providerInfo['products'] = $provider->products;
+            $providerInfo['cuit'] 		= $provider->cuit;
+            $providerInfo['name'] 		= $provider->name;
+            $providerInfo['products']	= $provider->products;
             return $this->renderJson(true, $providerInfo, 'Products de Proveedor');
         }
 

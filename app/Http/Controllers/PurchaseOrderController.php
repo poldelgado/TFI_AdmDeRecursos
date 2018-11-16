@@ -20,9 +20,11 @@ class PurchaseOrderController extends Controller {
             $purchaseOrdersComplete[] = [
                 "id" => $purchaseOrder->id,
                 "total" => $purchaseOrder->total,
-                "date_order" => $purchaseOrder->date_order,
+                "date_order" => $purchaseOrder->date_order->format("Y-m-d"),
                 "qualification" => $purchaseOrder->purchase_qualification_id !== null ? $purchaseOrder->purchase_qualification->average : null,
-                "product" => $purchaseOrder->product_id !== null ? $purchaseOrder->product->name : null,
+                "product_id" => $purchaseOrder->product_id,
+                "provider_id" => $purchaseOrder->provider_id,
+				"product" => $purchaseOrder->product_id !== null ? $purchaseOrder->product->name : null,
                 "provider" => $purchaseOrder->product_id !== null ? $purchaseOrder->provider->name : null,
                 "warranty_void" => $purchaseOrder->warranty_void,
             ];

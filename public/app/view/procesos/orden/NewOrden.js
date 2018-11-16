@@ -60,9 +60,9 @@ Ext.define('app.view.procesos.orden.NewOrden', {
                 },
                 {
                     xtype: 'fch',
-                    flex: 1,
                     labelWidth: 100,
-                    name: 'date_order'
+                    name: 'date_order',
+                    flex: 1
                 },
                 {
                     xtype: 'combobox',
@@ -78,7 +78,7 @@ Ext.define('app.view.procesos.orden.NewOrden', {
                 {
                     xtype: 'combobox',
                     flex: 1,
-                    fieldLabel: 'Proveedor',
+                    fieldLabel: 'Producto',
                     labelAlign: 'right',
                     name: 'product_id',
                     allowBlank: false,
@@ -88,17 +88,18 @@ Ext.define('app.view.procesos.orden.NewOrden', {
                 },
                 {
                     xtype: 'ent',
-                    flex: 1,
                     fieldLabel: 'Garantia',
                     labelWidth: 100,
                     name: 'warranty_void',
-                    allowDecimals: false
+                    allowDecimals: false,
+                    flex: 1
                 },
                 {
                     xtype: 'dec',
-                    flex: 1,
                     fieldLabel: 'Total',
-                    allowDecimals: false
+                    name: 'total',
+                    allowDecimals: false,
+                    flex: 1
                 }
             ]
         }

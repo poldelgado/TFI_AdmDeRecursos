@@ -24,6 +24,7 @@ Ext.define('app.view.procesos.orden.Ordenes', {
         'Ext.form.field.Text',
         'Ext.grid.Panel',
         'Ext.grid.column.Number',
+        'Ext.grid.column.Date',
         'Ext.view.Table',
         'Ext.grid.column.Action'
     ],
@@ -91,16 +92,22 @@ Ext.define('app.view.procesos.orden.Ordenes', {
                             format: '0,000'
                         },
                         {
+                            xtype: 'datecolumn',
+                            width: 151,
+                            dataIndex: 'date_order',
+                            text: 'Fecha'
+                        },
+                        {
                             xtype: 'gridcolumn',
-                            width: 308,
-                            dataIndex: 'name',
-                            text: 'Nombre'
+                            width: 265,
+                            dataIndex: 'product',
+                            text: 'Producto'
                         },
                         {
                             xtype: 'gridcolumn',
                             width: 461,
-                            dataIndex: 'description',
-                            text: 'Despción'
+                            dataIndex: 'provider',
+                            text: 'Proveedor'
                         },
                         {
                             xtype: 'actioncolumn',
@@ -115,7 +122,26 @@ Ext.define('app.view.procesos.orden.Ordenes', {
                                         win.show();
 
                                     },
-                                    icon: 'img/search.png'
+                                    icon: 'img/medidas.png',
+                                    tooltip: 'Calificar'
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'actioncolumn',
+                            width: 48,
+                            items: [
+                                {
+                                    handler: function(view, rowIndex, colIndex, item, e, record, row) {
+                                        var win = Ext.widget('neworden'),
+                                            frm = win.down('form');
+
+                                        frm.loadRecord(record);
+                                        win.show();
+
+                                    },
+                                    icon: 'img/search.png',
+                                    tooltip: 'Editar'
                                 }
                             ]
                         },
@@ -141,7 +167,8 @@ Ext.define('app.view.procesos.orden.Ordenes', {
 
                                         });
                                     },
-                                    icon: 'img/cancel.png'
+                                    icon: 'img/cancel.png',
+                                    tooltip: 'Eliminar'
                                 }
                             ]
                         }
@@ -158,35 +185,39 @@ Ext.define('app.view.procesos.orden.Ordenes', {
     },
 
     iniGrid: function(component, eOpts) {
-          var store = Ext.create('Ext.data.Store', {
-                    storeId: 'storeDisp',
-                    remoteSort: true,
-                    pageSize: 25,
+        var store = Ext.create('Ext.data.Store', {
+            storeId: 'storeDisp',
+            remoteSort: true,
+            pageSize: 25,
 
-                    fields: [
-                        { name: 'id'	    			},
-                        { name: 'date_order'        	},
-                        { name: 'total'   				},
-                        { name: 'purchase_qualification_id'   },
-                        { name: 'produc_id'   },
-                        { name: 'total'   }
-                    ],
-                    proxy: {
-                        type: 'memory',
-                        reader: {
-                            type: 'json',
-                            root: 'data'
-                        } ,
-                        writer: {
-                            type: 'json',
-                            encode: true,
-                            root: 'data'
-                        }
-                    },
-                    autoLoad: false
-                });
+            fields: [
+                { name: 'id'	    				},
+                { name: 'date_order'        		},
+                { name: 'purchase_qualification_id' },
+                { name: 'produc_id'   				},
+                { name: 'provider_id'   			},
+                { name: 'produc'   					},
+                { name: 'provider'   				},
+                { name: 'total'   					},
+                {name:	'provider_id'				},
+                {nme:'warranty_void'				}
+            ],
+            proxy: {
+                type: 'memory',
+                reader: {
+                    type: 'json',
+                    root: 'data'
+                } ,
+                writer: {
+                    type: 'json',
+                    encode: true,
+                    root: 'data'
+                }
+            },
+            autoLoad: false
+        });
 
-                component.reconfigure(store);
+        component.reconfigure(store);
     },
 
     onContainerAfterRender: function(component, eOpts) {

@@ -74,8 +74,7 @@ Ext.define('app.view.procesos.pve.NewPve', {
                     allowBlank: false,
                     enforceMaxLength: true,
                     minLength: 5,
-                    minLengthText: '80',
-                    vtype: 'alpha'
+                    minLengthText: '80'
                 },
                 {
                     xtype: 'txt',
