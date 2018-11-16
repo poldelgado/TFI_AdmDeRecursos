@@ -45,6 +45,8 @@ Route::get('/products_providers/find/{provider_id}', 'ProductProviderController@
 
 Route::resource('/products_providers', 'ProductProviderController')->middleware('auth');
 
+Route::get('/purchase_orders/graph', 'PurchaseOrderController@graphic1')->middleware('auth');
+
 Route::resource('/purchase_orders', 'PurchaseOrderController')->middleware('auth');
 
 Route::get('/purchase_orders/getSinCalificar', 'PurchaseOrderController@getSinCalificar')->middleware('auth');

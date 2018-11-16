@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Provider;
 use App\PurchaseOrder;
 use App\PurchaseQualification;
 use Illuminate\Http\Request;
@@ -176,5 +177,19 @@ class PurchaseOrderController extends Controller {
         }
         return $this->renderJson(false, null, 'No existe la Orden de Compra');
 
+    }
+
+    public function graphic1() {
+        $providers = Provider::all();
+
+        $graph = [];
+        foreach ($providers as $provider) {
+            $graph[] = [
+                'provider_name' => $provider->name,
+                'count' => count($provider->purchaseOrders)
+            ];
+        }
+
+        return $this->renderJson(true, $graph, 'Gráfico Torta de Compras');
     }
 }
