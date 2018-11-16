@@ -157,7 +157,7 @@ Ext.define('app.view.procesos.prod.Productos', {
                                         Ext.Msg.confirm('Aviso','Esta a punto de eliminar el registro seleccionado.¿Desea continuar?',function(op){
                                             if(op==='yes'){
                                                 var ajax = app.controller.std.Glob.ajax;
-                                                var json = ajax('DELETE', 'products',record.data);
+                                                var json = ajax('DELETE', 'products/'+record.data.id,null);
 
                                                 if(json.success){
                                                     Ext.Msg.alert('Aviso','Elemento Eliminado');

@@ -30,6 +30,7 @@ Ext.define('app.view.main.viewport', {
 
     height: 250,
     width: 400,
+    defaultListenerScope: true,
 
     layout: {
         type: 'hbox',
@@ -139,6 +140,7 @@ Ext.define('app.view.main.viewport', {
                         {
                             xtype: 'splitbutton',
                             flex: 1,
+                            itemId: 'estadisticas',
                             text: 'Estadisticas',
                             menu: {
                                 xtype: 'menu',
@@ -179,7 +181,10 @@ Ext.define('app.view.main.viewport', {
                             flex: 1,
                             text: 'Logout'
                         }
-                    ]
+                    ],
+                    listeners: {
+                        afterrender: 'onMenuAfterRender'
+                    }
                 }
             ]
         },
@@ -207,6 +212,29 @@ Ext.define('app.view.main.viewport', {
                 }
             ]
         }
-    ]
+    ],
+
+    onMenuAfterRender: function(component, eOpts) {
+        var ajax = app.controller.std.Glob.ajax,
+            json = ajax('POST', 'is_admin');
+        is_admin=false;
+        if(json.success){
+            is_admin=json.data.admin;
+        }
+
+        var btest = component.down('[itemId=estadisticas]');
+
+        if(is_admin){
+           btest.show();
+        }else{
+            btest.hide();
+        }
+
+
+
+
+
+
+    }
 
 });
