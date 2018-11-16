@@ -24,6 +24,7 @@ Ext.define('app.view.main.viewport', {
         'app.view.procesos.tec.Tecnicos',
         'app.view.procesos.usr.Usuarios',
         'app.view.procesos.pveprd.PvePrd',
+        'app.view.procesos.pvetec.PveTec',
         'Ext.button.Split',
         'Ext.menu.Menu',
         'Ext.menu.Item'
@@ -151,7 +152,7 @@ Ext.define('app.view.main.viewport', {
                             text: 'Vinculos',
                             menu: {
                                 xtype: 'menu',
-                                width: 120,
+                                width: 200,
                                 items: [
                                     {
                                         xtype: 'menuitem',
@@ -167,10 +168,6 @@ Ext.define('app.view.main.viewport', {
                                         listeners: {
                                             click: 'onMenuitemClick1'
                                         }
-                                    },
-                                    {
-                                        xtype: 'menuitem',
-                                        text: 'Menu Item'
                                     }
                                 ]
                             }
@@ -182,6 +179,7 @@ Ext.define('app.view.main.viewport', {
                             text: 'Estadisticas',
                             menu: {
                                 xtype: 'menu',
+                                width: 200,
                                 items: [
                                     {
                                         xtype: 'menuitem',
@@ -250,6 +248,9 @@ Ext.define('app.view.main.viewport', {
                 },
                 {
                     xtype: 'pveprd'
+                },
+                {
+                    xtype: 'pvetec'
                 }
             ]
         }

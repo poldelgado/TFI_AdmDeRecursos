@@ -47,7 +47,9 @@ Ext.application({
         'procesos.usr.NewUsr',
         'std.grid.filter',
         'procesos.pveprd.PvePrd',
-        'procesos.pveprd.grid'
+        'procesos.pveprd.grid',
+        'procesos.pvetec.grid',
+        'procesos.pvetec.PveTec'
     ],
     controllers: [
         'std.Glob'

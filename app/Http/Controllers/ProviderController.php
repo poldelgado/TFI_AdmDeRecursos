@@ -156,7 +156,13 @@ class ProviderController extends Controller {
         if (isset($provider)) {
             $providerInfo['cuit'] = $provider->cuit;
             $providerInfo['name'] = $provider->name;
-            $providerInfo['technicians'] = $provider->technicians;
+			
+			$technicians = $provider->technicians;
+			foreach ($technicians as $technician) {
+				$technician->name =  $technician->last_name.', '.$technician->first_name;
+			}
+			
+            $providerInfo['technicians'] = $technicians ;
             return $this->renderJson(true, $providerInfo, 'Técnicos de Proveedor');
         }
 

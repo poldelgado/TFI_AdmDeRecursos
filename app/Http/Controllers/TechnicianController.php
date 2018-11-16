@@ -14,6 +14,9 @@ class TechnicianController extends Controller {
      */
     public function index() {
         $technicians = Technician::all();
+		 foreach ($technicians as $technician) {
+			$technician->name =  $technician->last_name.', '.$technician->first_name;
+		 }
         return $this->renderJson(true, $technicians, 'Listado de Técnicos');
     }
 

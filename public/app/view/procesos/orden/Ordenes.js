@@ -110,6 +110,13 @@ Ext.define('app.view.procesos.orden.Ordenes', {
                             text: 'Proveedor'
                         },
                         {
+                            xtype: 'numbercolumn',
+                            width: 67,
+                            dataIndex: 'qualification',
+                            text: 'Calificación',
+                            format: '0,000'
+                        },
+                        {
                             xtype: 'actioncolumn',
                             width: 48,
                             items: [
@@ -196,7 +203,7 @@ Ext.define('app.view.procesos.orden.Ordenes', {
                 { name: 'purchase_qualification_id' },
                 { name: 'produc_id'   				},
                 { name: 'provider_id'   			},
-                { name: 'produc'   					},
+                { name: 'product'   				},
                 { name: 'provider'   				},
                 { name: 'total'   					},
                 {name:	'provider_id'				},
