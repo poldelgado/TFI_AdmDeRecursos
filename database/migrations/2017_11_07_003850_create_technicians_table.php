@@ -16,11 +16,11 @@ class CreateTechniciansTable extends Migration
         Schema::create('technicians', function (Blueprint $table) {
             $table->increments('id');
             $table->string('last_name', 50);
-            $table->string('first_name', 50);
+            $table->string('first_name', 50)->nullable();
             $table->string('phone', 20);
             $table->string('email', 50);
             $table->string('address',50);
-            $table->bigInteger('cuit')->unique();
+            $table->string('cuit')->unique();
             $table->timestamps();
         });
     }
