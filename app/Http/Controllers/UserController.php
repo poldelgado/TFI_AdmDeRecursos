@@ -98,10 +98,10 @@ class UserController extends Controller {
     }
 
     public function is_admin() {
-        return $this->renderJson(true, ['user' => Auth::user()->name, 'admin' => Auth::user()->isAdmin()], 'Usuario');
+        return $this->renderJson(true, ['email' => Auth::user()->email, 'user' => Auth::user()->name, 'admin' => Auth::user()->isAdmin()], 'Usuario');
     }
 
     public function is_logged_in() {
-        return $this->renderJson(Auth::user(), null, null);
+        return $this->renderJson(Auth::user() ? true : false, ['email' => Auth::user()->email, 'user' => Auth::user()->name, 'admin' => Auth::user()->isAdmin()], null);
     }
 }
