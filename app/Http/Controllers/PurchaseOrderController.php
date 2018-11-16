@@ -21,9 +21,9 @@ class PurchaseOrderController extends Controller {
                 "id" => $purchaseOrder->id,
                 "total" => $purchaseOrder->total,
                 "date_order" => $purchaseOrder->date_order,
-                "qualification" => $purchaseOrder->purchase_qualification()->average,
-                "product" => $purchaseOrder->product()->name,
-                "provider" => $purchaseOrder->provider()->name,
+                "qualification" => $purchaseOrder->purchase_qualification_id !== null ? $purchaseOrder->purchase_qualification->average : null,
+                "product" => $purchaseOrder->product_id !== null ? $purchaseOrder->product->name : null,
+                "provider" => $purchaseOrder->product_id !== null ? $purchaseOrder->provider->name : null,
                 "warranty_void" => $purchaseOrder->warranty_void,
             ];
         }
@@ -47,9 +47,9 @@ class PurchaseOrderController extends Controller {
                 "id" => $purchaseOrder->id,
                 "total" => $purchaseOrder->total,
                 "date_order" => $purchaseOrder->date_order,
-//                "qualification" => $purchaseOrder->purchase_qualification()->average,
-                "product" => $purchaseOrder->product()->name,
-                "provider" => $purchaseOrder->provider()->name,
+//                "qualification" => $purchaseOrder->purchase_qualification_id !== null ? $purchaseOrder->purchase_qualification->average : null,
+                "product" => $purchaseOrder->product_id !== null ? $purchaseOrder->product->name : null,
+                "provider" => $purchaseOrder->product_id !== null ? $purchaseOrder->provider->name : null,
                 "warranty_void" => $purchaseOrder->warranty_void,
             ];
         }
@@ -101,9 +101,9 @@ class PurchaseOrderController extends Controller {
                 "id" => $purchaseOrder->id,
                 "total" => $purchaseOrder->total,
                 "date_order" => $purchaseOrder->date_order,
-                "qualification" => $purchaseOrder->purchase_qualification()->average,
-                "product" => $purchaseOrder->product()->name,
-                "provider" => $purchaseOrder->provider()->name,
+                "qualification" => $purchaseOrder->purchase_qualification_id !== null ? $purchaseOrder->purchase_qualification->average : null,
+                "product" => $purchaseOrder->product_id !== null ? $purchaseOrder->product->name : null,
+                "provider" => $purchaseOrder->product_id !== null ? $purchaseOrder->provider->name : null,
                 "warranty_void" => $purchaseOrder->warranty_void,
             ];
             return $this->renderJson(true, $purchaseOrderComplete, 'Orden de Compra');
