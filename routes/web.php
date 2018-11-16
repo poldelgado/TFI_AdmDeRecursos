@@ -53,7 +53,7 @@ Route::get('/purchase_orders/getSinCalificar', 'PurchaseOrderController@getSinCa
 
 Route::get('/findProductName', 'ProductController@findProductName')->name('findProductName');
 
-Route::get('/purchase_orders/qualify/{order_id}', 'PurchaseOrderController@qualifyPurchaseOrder')->name('qualifyPurchaseOrder')->middleware('auth');
+Route::post('/purchase_orders/qualify/{order_id}', 'PurchaseOrderController@qualifyPurchaseOrder')->name('qualifyPurchaseOrder')->middleware('auth');
 
 Route::put('purchase_orders/qualify_update/{buy_order_qualification_id}', 'PurchaseOrderController@updateQualification')->name('qualificationOrderUpdate')->middleware('auth');
 
