@@ -25,7 +25,7 @@ class PurchaseOrderController extends Controller {
                 "qualification" => $purchaseOrder->purchase_qualification_id !== null ? $purchaseOrder->purchase_qualification->average : null,
                 "product_id" => $purchaseOrder->product_id,
                 "provider_id" => $purchaseOrder->provider_id,
-				"product" => $purchaseOrder->product_id !== null ? $purchaseOrder->product->name : null,
+                "product" => $purchaseOrder->product_id !== null ? $purchaseOrder->product->name : null,
                 "provider" => $purchaseOrder->product_id !== null ? $purchaseOrder->provider->name : null,
                 "warranty_void" => $purchaseOrder->warranty_void,
             ];
@@ -39,7 +39,7 @@ class PurchaseOrderController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function getSinCalificar() {
-        $purchaseOrders = PurchaseOrder::leftJoin('purhcase_orders', function($join) {
+        $purchaseOrders = PurchaseOrder::leftJoin('purhcase_orders', function ($join) {
             $join->on('purchase_orders.id', '=', 'purchase_qualifications.id');
         })
             ->whereNull('purchase_qualifications.id')
@@ -81,11 +81,9 @@ class PurchaseOrderController extends Controller {
         $purchaseOrder->warranty_void = $request->warranty_void;
         $purchaseOrder->total = $request->total;
         $qualification = new PurchaseQualification();
-        if ($qualification->save()) {
-            $purchaseOrder->purchase_qualification()->associate($qualification);
-            if ($purchaseOrder->save()) {
-                return $this->renderJson(true, null, 'Orden de Compra registrada exitosamente');
-            }
+        $purchaseOrder->purchase_qualification()->associate($qualification);
+        if ($purchaseOrder->save()) {
+            return $this->renderJson(true, null, 'Orden de Compra registrada exitosamente');
         }
         return $this->renderJson(false, null, 'Ocurrió un error al registrar la Orden de Compra');
     }
