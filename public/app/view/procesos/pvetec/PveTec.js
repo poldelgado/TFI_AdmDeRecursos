@@ -234,7 +234,7 @@ Ext.define('app.view.procesos.pvetec.PveTec', {
                 gridIzq.getView().getSelectionModel().selectNext();
                 storeIzq.remove(selection);
 
-
+                var par = {technician_id:selection.data.id,provider_id:pveid};
                 json = ajax('POST', 'providers/associate_technician',par);
                 break;
             case 'todoDerecha':

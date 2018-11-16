@@ -28,6 +28,7 @@ Ext.define('app.store.proveedores', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'proveedores',
+            autoLoad: true,
             proxy: {
                 type: 'ajax',
                 url: 'providers',

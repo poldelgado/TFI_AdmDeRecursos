@@ -25,6 +25,8 @@ Ext.define('app.view.main.viewport', {
         'app.view.procesos.usr.Usuarios',
         'app.view.procesos.pveprd.PvePrd',
         'app.view.procesos.pvetec.PveTec',
+        'app.view.reportes.RepPve',
+        'app.view.reportes.RepPve2',
         'Ext.button.Split',
         'Ext.menu.Menu',
         'Ext.menu.Item'
@@ -126,7 +128,7 @@ Ext.define('app.view.main.viewport', {
                                 menu.selectCard(2);
                             },
                             flex: 1,
-                            text: 'Ordenes de Compras'
+                            text: 'Órdenes de Compras'
                         },
                         {
                             xtype: 'button',
@@ -135,7 +137,7 @@ Ext.define('app.view.main.viewport', {
                                 menu.selectCard(3);
                             },
                             flex: 1,
-                            text: 'Tecnicos'
+                            text: 'Técnicos'
                         },
                         {
                             xtype: 'button',
@@ -144,12 +146,13 @@ Ext.define('app.view.main.viewport', {
                                 menu.selectCard(4);
                             },
                             flex: 1,
+                            itemId: 'usuarios',
                             text: 'Usuarios'
                         },
                         {
                             xtype: 'splitbutton',
                             flex: 1,
-                            text: 'Vinculos',
+                            text: 'Vínculos',
                             menu: {
                                 xtype: 'menu',
                                 width: 200,
@@ -183,20 +186,18 @@ Ext.define('app.view.main.viewport', {
                                 items: [
                                     {
                                         xtype: 'menuitem',
-                                        handler: function(item, e) {
-                                            var menu = button.up('[itemId=menu]');
-                                            menu.selectCard(3);
-                                        },
                                         width: 165,
-                                        text: 'Grafico 1'
+                                        text: 'Grafico 1',
+                                        listeners: {
+                                            click: 'onMenuitemClick2'
+                                        }
                                     },
                                     {
                                         xtype: 'menuitem',
-                                        handler: function(item, e) {
-                                            var menu = button.up('[itemId=menu]');
-                                            menu.selectCard(4);
-                                        },
-                                        text: 'grafico 2'
+                                        text: 'grafico 2',
+                                        listeners: {
+                                            click: 'onMenuitemClick3'
+                                        }
                                     }
                                 ]
                             }
@@ -251,6 +252,12 @@ Ext.define('app.view.main.viewport', {
                 },
                 {
                     xtype: 'pvetec'
+                },
+                {
+                    xtype: 'RepPve'
+                },
+                {
+                    xtype: 'reppve2'
                 }
             ]
         }
@@ -266,26 +273,34 @@ Ext.define('app.view.main.viewport', {
                 menu.selectCard(6);
     },
 
+    onMenuitemClick2: function(item, e, eOpts) {
+        var menu = item.up('[itemId=menu]');
+        menu.selectCard(7);
+    },
+
+    onMenuitemClick3: function(item, e, eOpts) {
+        var menu = item.up('[itemId=menu]');
+        menu.selectCard(8);
+    },
+
     onMenuAfterRender: function(component, eOpts) {
         var ajax = app.controller.std.Glob.ajax,
-            json = ajax('POST', 'is_admin');
+            json = ajax('GET', 'is_admin');
         is_admin=false;
         if(json.success){
             is_admin=json.data.admin;
         }
 
-        var btest = component.down('[itemId=estadisticas]');
+        var btest = component.down('[itemId=estadisticas]'),
+            busr  = component.down('[itemId=usuarios]');
 
         if(is_admin){
            btest.show();
+           busr.show();
         }else{
             btest.hide();
+            busr.hide();
         }
-
-
-
-
-
 
     }
 

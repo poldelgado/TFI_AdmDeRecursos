@@ -81,6 +81,27 @@ Ext.define('app.view.procesos.orden.Ordenes', {
                 },
                 {
                     xtype: 'gridpanel',
+                    loadGrid: function() {
+                        var ajax = app.controller.std.Glob.ajax,
+                            json = ajax('GET', 'purchase_orders',null);
+
+
+
+                        var grid = this;
+
+
+                        if(json.success){
+                            grid.store.add(json.data);
+                        }else{
+                            Ext.toast({
+                                html: 'Sin datos para esta vista',
+                                title: 'Info',
+                                width: 200,
+                                align: 't',
+                                autoClose: true
+                            });
+                        }
+                    },
                     flex: 1,
                     title: 'Ordenes de Compras',
                     columns: [
@@ -122,12 +143,12 @@ Ext.define('app.view.procesos.orden.Ordenes', {
                             items: [
                                 {
                                     handler: function(view, rowIndex, colIndex, item, e, record, row) {
-                                        var win = Ext.widget('neworden'),
+                                        var win = Ext.widget('newcali'),
                                             frm = win.down('form');
 
                                         frm.loadRecord(record);
                                         win.show();
-
+                                        win.on('close',function(){view.up().loadGrid();});
                                     },
                                     icon: 'img/medidas.png',
                                     tooltip: 'Calificar'
@@ -145,7 +166,7 @@ Ext.define('app.view.procesos.orden.Ordenes', {
 
                                         frm.loadRecord(record);
                                         win.show();
-
+                                        win.on('close',function(){view.up().loadGrid();});
                                     },
                                     icon: 'img/search.png',
                                     tooltip: 'Editar'
@@ -228,28 +249,8 @@ Ext.define('app.view.procesos.orden.Ordenes', {
     },
 
     onContainerAfterRender: function(component, eOpts) {
-         var ajax = app.controller.std.Glob.ajax,
-             json = ajax('GET', 'purchase_orders',null);
-
-
-
         var grid = component.down('grid');
-
-
-        if(json.success){
-            grid.store.add(json.data);
-        }else{
-            Ext.toast({
-                html: 'Sin datos para esta vista',
-                title: 'Info',
-                width: 200,
-                align: 't',
-                autoClose: true
-            });
-        }
-
-
-
+        grid.loadGrid();
 
     }
 

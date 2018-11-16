@@ -56,7 +56,6 @@ Ext.define('app.view.procesos.usr.Usuarios', {
                         win.on('close',function(){grid.loadGrid();});
 
                     },
-                    hidden: true,
                     icon: 'img/add.png',
                     iconAlign: 'right',
                     text: 'Nuevo'
@@ -123,7 +122,7 @@ Ext.define('app.view.procesos.usr.Usuarios', {
                         },
                         {
                             xtype: 'gridcolumn',
-                            width: 450,
+                            width: 380,
                             dataIndex: 'name',
                             text: 'Nombre'
                         },
@@ -135,7 +134,7 @@ Ext.define('app.view.procesos.usr.Usuarios', {
                         },
                         {
                             xtype: 'booleancolumn',
-                            width: 450,
+                            width: 64,
                             dataIndex: 'admin',
                             text: 'Admin'
                         },

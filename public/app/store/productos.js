@@ -27,6 +27,7 @@ Ext.define('app.store.productos', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'productos',
+            autoLoad: true,
             proxy: {
                 type: 'ajax',
                 url: 'products',

@@ -22,7 +22,9 @@ Ext.Loader.setConfig({
 Ext.application({
     stores: [
         'proveedores',
-        'productos'
+        'productos',
+        'grafico1',
+        'grafico2'
     ],
     views: [
         'seguridad.Login',
@@ -49,7 +51,10 @@ Ext.application({
         'procesos.pveprd.PvePrd',
         'procesos.pveprd.grid',
         'procesos.pvetec.grid',
-        'procesos.pvetec.PveTec'
+        'procesos.pvetec.PveTec',
+        'reportes.RepPve',
+        'procesos.cali.NewCali',
+        'reportes.RepPve2'
     ],
     controllers: [
         'std.Glob'
