@@ -27,9 +27,9 @@ Route::resource('/technicians', 'TechnicianController')->middleware('auth');
 
 Route::resource('/users', 'UserController')->middleware('auth');
 
-Route::get('/users/is_admin', 'UserController@is_admin')->name('is_admin');
+Route::get('/is_admin', 'UserController@is_admin')->name('is_admin');
 
-Route::get('/users/is_logged_in', 'UserController@is_logged_in')->name('is_logged_in');
+Route::get('/is_logged_in', 'UserController@is_logged_in')->name('is_logged_in');
 
 Route::resource('/products', 'ProductController')->middleware('auth');
 

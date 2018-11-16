@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PurchaseOrder extends Model
 {
-    //
+    protected $dates = ['date_order'];
 
     public function product(){
         return $this->belongsTo('App\Product');
