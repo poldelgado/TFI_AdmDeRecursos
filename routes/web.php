@@ -37,6 +37,8 @@ Route::get('/is_logged_in', 'UserController@is_logged_in')->name('is_logged_in')
 
 Route::resource('/products', 'ProductController')->middleware('auth');
 
+Route::get('/products_providers/find/{provider_id}', 'ProductProviderController@find')->middleware('auth');
+
 Route::resource('/products_providers', 'ProductProviderController')->middleware('auth');
 
 Route::resource('/purchase_orders', 'PurchaseOrderController')->middleware('auth');

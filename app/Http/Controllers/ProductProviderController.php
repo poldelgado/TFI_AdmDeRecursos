@@ -16,9 +16,31 @@ class ProductProviderController extends Controller {
      */
     public function index() {
         $providers = Provider::all();
-        $products = Product::all();
+        $providersInfo = [];
+        if (isset($providers)) {
+            foreach ($providers as $provider) {
+                $providerInfo['cuit'] = $provider->cuit;
+                $providerInfo['name'] = $provider->name;
+                $providerInfo['products'] = $provider->products;
+                $providersInfo[] = $providerInfo;
+            }
+            return $this->renderJson(true, $providersInfo, 'Productos de Proveedor');
+        }
 
-        return $this->renderJson(true, ['products' => $products, 'providers' =>$providers], 'Listado de Productos de Proveedores');
+        return $this->renderJson(false, null, 'Ocurrió un error al intentar obtener la lista de productos asociados a proveedor');
+    }
+
+    public function find($id) {
+        $provider = Provider::find((int) $id);
+
+        if (isset($provider)) {
+            $providerInfo['cuit'] = $provider->cuit;
+            $providerInfo['name'] = $provider->name;
+            $providerInfo['products'] = $provider->products;
+            return $this->renderJson(true, $providerInfo, 'Products de Proveedor');
+        }
+
+        return $this->renderJson(false, null, 'Ocurrió un error al intentar obtener la lista de productos asociados a proveedor');
     }
 
     /**
