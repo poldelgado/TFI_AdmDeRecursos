@@ -56,7 +56,7 @@ class ProviderController extends Controller {
 
         if ($provider->save()) {
             $provider->technicians()->sync($request->technicians, false);
-            return $this->renderJson(true, null, 'Proveedor registrado exitosamente');
+            return $this->renderJson(true, null, 'Proveedor registrado correctamente');
         }
 
         return $this->renderJson(false, null, 'Ocurrió un error al registrar el proveedor');
@@ -115,7 +115,7 @@ class ProviderController extends Controller {
 
         if ($provider->save()) {
             $provider->technicians()->sync($request->technicians);
-            return $this->renderJson(true, null, 'El Proveedor fue actualizado exitosamente');
+            return $this->renderJson(true, null, 'El Proveedor fue actualizado correctamente');
         }
 
         return $this->renderJson(false, null, 'Ocurrió un error al actualizar el Proveedor');
@@ -130,9 +130,36 @@ class ProviderController extends Controller {
     public function destroy($id) {
         $provider = Provider::find($id);
         if ($provider->delete()) {
-            return $this->renderJson(true, null, 'El Proveedor fue borrado exitosamente');
+            return $this->renderJson(true, null, 'El Proveedor fue borrado correctamente');
         }
 
         return $this->renderJson(false, null, 'Ocurrió un error al borrar el Proveedor');
+    }
+
+    public function associateTechnician(Request $request) {
+        //validar los datos
+        $this->validate($request, [
+            'technician_id' => 'required|numeric',
+            'provider_id' => 'required|numeric'
+        ]);
+
+        if (Provider::find($request->provider_id)->technicians()->attach($request->technician_id)) {
+            return $this->renderJson(true, null, 'El Técnico fue asociado al Proveedor correctamente');
+        }
+
+        return $this->renderJson(false, null, 'Ocurrió un error al asociar el Técnico con el Proveedor');
+    }
+
+    public function techniciansList($id) {
+        $provider = Provider::find((int) $id);
+
+        if (isset($provider)) {
+            $providerInfo['cuit'] = $provider->cuit;
+            $providerInfo['name'] = $provider->name;
+            $providerInfo['technicians'] = $provider->technicians;
+            return $this->renderJson(true, $providerInfo, 'Técnicos de Proveedor');
+        }
+
+        return $this->renderJson(false, null, 'Ocurrió un error al intentar obtener la lista de técnicos asociados a proveedor');
     }
 }

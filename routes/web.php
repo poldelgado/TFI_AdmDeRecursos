@@ -21,6 +21,10 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::post('/providers/associate_technician', 'ProviderController@associateTechnician')->middleware('auth');
+
+Route::get('/providers/technicians/{provider_id}', 'ProviderController@techniciansList')->middleware('auth');
+
 Route::resource('/providers', 'ProviderController')->middleware('auth');
 
 Route::resource('/technicians', 'TechnicianController')->middleware('auth');
