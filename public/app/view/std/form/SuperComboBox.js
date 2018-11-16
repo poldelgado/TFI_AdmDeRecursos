@@ -27,21 +27,14 @@ Ext.define('app.view.std.form.SuperComboBox', {
     queryCaching: false,
     queryParam: 'data',
     valueField: 'id',
+    defaultListenerScope: true,
 
-    validator: function(value) {
-        var scb = this;
+    listeners: {
+        afterrender: 'onComboboxAfterRender'
+    },
 
-        if(scb.allowBlank===true){
-            return true;
-        }
-        var record 	= this.store.findRecord('valor',value);
-        var errMsg	= "No valido";
-        if(!record){
-            return errMsg;
-        }
+    onComboboxAfterRender: function(component, eOpts) {
 
-
-        return  true;
     }
 
 });

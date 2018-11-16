@@ -23,28 +23,59 @@ Ext.define('app.controller.std.Glob', {
 
     statics: {
         ajax: function(metodo, url, parm) {
-            if(!parm){parm={};}
+            out='';
+            isLogged=false;
+
             Ext.Ajax.request({
-                url: url,
-                method: metodo,
+                url: 'is_logged_in',
+                method: 'GET',
                 async: false,
-                params:parm,
                 headers: {
                     'Accept': 'application/json'
                 },
 
                 callback: function(options, success, response) {
                     var resp = response.responseText;
-                    out = resp;
-
                     if (resp.constructor === "".constructor) {
                         try {
                             out = Ext.JSON.decode(resp);
+                            isLogged = true;
                         }
                         catch(err) {}
                     }
                 }
             });
+
+
+            if(isLogged){
+                if(!parm){parm={};}
+                Ext.Ajax.request({
+                    url: url,
+                    method: metodo,
+                    async: false,
+                    params:parm,
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+
+                    callback: function(options, success, response) {
+                        var resp = response.responseText;
+                        out = resp;
+
+                        if (resp.constructor === "".constructor) {
+                            try {
+                                out = Ext.JSON.decode(resp);
+                            }
+                            catch(err) {}
+                        }
+                    }
+                });
+            }else{
+                window.open('login','_self');
+            }
+
+
+
 
             return out;
         }

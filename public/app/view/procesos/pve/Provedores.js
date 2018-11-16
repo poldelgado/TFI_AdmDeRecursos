@@ -144,6 +144,13 @@ Ext.define('app.view.procesos.pve.Provedores', {
                                         win.show();
                                         win.on('close',function(){view.up().loadGrid();});
                                     },
+                                    getClass: function(v, metadata, r, rowIndex, colIndex, store) {
+                                        if(!is_admin){
+                                            metadata.css = "x-hide-display";
+                                        }else{
+                                            metadata.css = "x-grid-center-icon";
+                                        }
+                                    },
                                     icon: 'img/search.png'
                                 }
                             ]
