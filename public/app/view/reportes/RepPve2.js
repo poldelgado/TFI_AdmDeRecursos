@@ -70,7 +70,7 @@ Ext.define('app.view.reportes.RepPve2', {
                                         'provider_name'
                                     ],
                                     position: 'bottom',
-                                    title: '3D Category Axis'
+                                    title: 'Proveedores'
                                 },
                                 {
                                     type: 'numeric3d',
@@ -78,15 +78,15 @@ Ext.define('app.view.reportes.RepPve2', {
                                         'provider_qualification'
                                     ],
                                     position: 'left',
-                                    title: '3D Numeric Axis'
+                                    title: 'Calificaciones'
                                 }
                             ],
                             series: [
                                 {
                                     type: 'bar3d',
-                                    xField: 'x',
+                                    xField: 'provider_name',
                                     yField: [
-                                        'y'
+                                        'provider_qualification'
                                     ]
                                 }
                             ]
