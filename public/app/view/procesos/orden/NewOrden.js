@@ -21,11 +21,11 @@ Ext.define('app.view.procesos.orden.NewOrden', {
         'app.view.procesos.orden.NewOrdenViewModel',
         'app.view.std.form.Ent',
         'app.view.std.form.Fch',
-        'app.view.std.form.CUIT',
-        'app.view.std.form.Txt',
+        'app.view.std.form.Dec',
         'Ext.form.Panel',
         'Ext.form.field.Number',
         'Ext.form.field.Date',
+        'Ext.form.field.ComboBox',
         'Ext.toolbar.Toolbar',
         'Ext.button.Button'
     ],
@@ -36,7 +36,6 @@ Ext.define('app.view.procesos.orden.NewOrden', {
     modal: true,
     width: 669,
     title: 'Nuevo/Editar',
-    defaultListenerScope: true,
 
     layout: {
         type: 'vbox',
@@ -66,40 +65,40 @@ Ext.define('app.view.procesos.orden.NewOrden', {
                     name: 'date_order'
                 },
                 {
-                    xtype: 'cuit',
-                    labelWidth: 100,
+                    xtype: 'combobox',
                     flex: 1,
-                    listeners: {
-                        keyup: 'onTextfieldKeyup'
-                    }
+                    fieldLabel: 'Proveedor',
+                    labelAlign: 'right',
+                    name: 'provider_id',
+                    allowBlank: false,
+                    displayField: 'name',
+                    store: 'proveedores',
+                    valueField: 'id'
                 },
                 {
-                    xtype: 'txt',
-                    fieldLabel: 'Nombre',
-                    labelWidth: 100,
-                    name: 'name',
-                    allowBlank: false
+                    xtype: 'combobox',
+                    flex: 1,
+                    fieldLabel: 'Proveedor',
+                    labelAlign: 'right',
+                    name: 'product_id',
+                    allowBlank: false,
+                    displayField: 'name',
+                    store: 'productos',
+                    valueField: 'id'
                 },
                 {
-                    xtype: 'txt',
-                    fieldLabel: 'EMail',
+                    xtype: 'ent',
+                    flex: 1,
+                    fieldLabel: 'Garantia',
                     labelWidth: 100,
-                    name: 'email',
-                    allowBlank: false
+                    name: 'warranty_void',
+                    allowDecimals: false
                 },
                 {
-                    xtype: 'txt',
-                    fieldLabel: 'Telefono',
-                    labelWidth: 100,
-                    name: 'phone',
-                    allowBlank: false
-                },
-                {
-                    xtype: 'txt',
-                    fieldLabel: 'Dirección',
-                    labelWidth: 100,
-                    name: 'address',
-                    allowBlank: false
+                    xtype: 'dec',
+                    flex: 1,
+                    fieldLabel: 'Total',
+                    allowDecimals: false
                 }
             ]
         }
@@ -119,15 +118,17 @@ Ext.define('app.view.procesos.orden.NewOrden', {
                         var win  = button.up('window'),
                             frm  = win.down('form'),
                             val  = frm.getValues(),
-                            ajax = app.controller.std.Glob.ajax;
+                            ajax = app.controller.std.Glob.ajax,
+                            url	 = 'purchase_orders';
 
                         if(frm.isValid()){
                             var metodo = 'POST';
                             if(val.id>0){
                                 metodo = 'PUT';
+                                url= url+'/'+val.id;
                             }
 
-                            var json = ajax(metodo, 'providers',val);
+                            var json = ajax(metodo, url,val);
                             if(json.success){
                                 Ext.Msg.alert('Aviso','Almacenamiento correcto');
                                 win.close();
@@ -141,74 +142,6 @@ Ext.define('app.view.procesos.orden.NewOrden', {
                 }
             ]
         }
-    ],
-
-    onTextfieldKeyup: function(textfield, e, eOpts) {
-        console.log('adfad----');
-        var cuit = textfield.getValue();
-        var rawValue = textfield.getRawValue();
-
-        if (cuit.length===11){
-            textfield.getValue = function (){
-                var a = this,
-                    b = a.rawToValue(a.processRawValue(a.getRawValue()));
-                b = b.replace(/-/g,'');
-                a.value = b;
-                return b;
-            };
-
-            var rawValue = textfield.getRawValue(), cuit = textfield.getValue();
-
-
-            var coef = '5432765432', suma = 0, rest = 0;
-
-            if (cuit) {
-
-                for (var ix = 0; ix <= 9; ix++){
-                    suma = suma + (parseInt(cuit.substr(ix, 1)) * parseInt(coef.substr(ix, 1)));
-                }
-            }
-
-            rest = Math.round((suma / 11 - parseInt(suma / 11)) * parseFloat(11));
-            var digitover  = cuit.substr( 10, 1);
-
-            if (rest > 1) {
-                rest = 11 - rest;
-            }
-
-            if (rest != digitover) {
-                textfield.setValue('');
-                Ext.Msg.show({
-                    title:'',
-                    msg: 'El CUIT ingresado no es valido..',
-                    buttons: Ext.Msg.OK,
-                    icon: Ext.Msg.ERROR,
-                });
-            }
-            else {
-                var strCuit =cuit.substr(0, 2)+'-'+cuit.substr(2,8)+'-'+cuit.substr(10,1);
-                textfield.setRawValue(strCuit);
-            }
-        }else if(cuit.length>=11){
-            textfield.setValue('');
-            Ext.Msg.show({
-                title:'',
-                msg: 'El CUIT ingresado no es valido..',
-                buttons: Ext.Msg.OK,
-                icon: Ext.Msg.ERROR,
-            });
-
-        }else if(rawValue.length > 11 &&rawValue.length < 13){
-            textfield.setValue('');
-            Ext.Msg.show({
-                title:'',
-                msg: 'El CUIT ingresado no es valido..',
-                buttons: Ext.Msg.OK,
-                icon: Ext.Msg.ERROR,
-            });
-
-
-        }
-    }
+    ]
 
 });

@@ -65,16 +65,16 @@ class PurchaseOrderController extends Controller {
     public function store(Request $request) {
         $this->validate($request, [
             'date_order' => 'required:date',
-            'providers' => 'required',
-            'products' => 'required',
+            'provider_id' => 'required',
+            'product_id' => 'required',
             'warranty_void' => 'required:integercontro',
             'total' => 'required'
         ]);
 
         $purchaseOrder = new PurchaseOrder();
         $purchaseOrder->date_order = $request->date_order;
-        $purchaseOrder->provider_id = $request->providers;
-        $purchaseOrder->product_id = $request->products;
+        $purchaseOrder->provider_id = $request->provider_id;
+        $purchaseOrder->product_id = $request->product_id;
         $purchaseOrder->warranty_void = $request->warranty_void;
         $purchaseOrder->total = $request->total;
         $qualification = new PurchaseQualification();
