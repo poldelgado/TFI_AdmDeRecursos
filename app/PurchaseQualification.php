@@ -8,6 +8,6 @@ class PurchaseQualification extends Model
 {
     //
     public function purchase_order(){
-        return $this->belongsTo('App\PurchaseOrder');
+        return $this->hasOne('App\PurchaseOrder');
     }
 }
