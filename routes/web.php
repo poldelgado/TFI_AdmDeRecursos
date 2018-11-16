@@ -27,6 +27,8 @@ Route::get('/providers/technicians/{provider_id}', 'ProviderController@technicia
 
 Route::post('/providers/detach_technician', 'ProviderController@detachTechnician')->middleware('auth');
 
+Route::get('/providers/graph', 'ProviderController@graphic1')->middleware('auth');
+
 Route::resource('/providers', 'ProviderController')->middleware('auth');
 
 Route::resource('/technicians', 'TechnicianController')->middleware('auth');
