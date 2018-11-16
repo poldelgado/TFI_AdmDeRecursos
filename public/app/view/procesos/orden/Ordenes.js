@@ -201,7 +201,7 @@ Ext.define('app.view.procesos.orden.Ordenes', {
                 { name: 'id'	    				},
                 { name: 'date_order'        		},
                 { name: 'purchase_qualification_id' },
-                { name: 'produc_id'   				},
+                { name: 'product_id'   				},
                 { name: 'provider_id'   			},
                 { name: 'product'   				},
                 { name: 'provider'   				},

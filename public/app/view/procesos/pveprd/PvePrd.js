@@ -226,6 +226,7 @@ Ext.define('app.view.procesos.pveprd.PvePrd', {
             gridDer = conte.down('[itemId=gridDer]'),
             storeDer = gridDer.store,
             storeIzq = gridIzq.store;
+        var ajax = app.controller.std.Glob.ajax;
 
         switch(opcion){
             case 'derecha':
@@ -235,16 +236,15 @@ Ext.define('app.view.procesos.pveprd.PvePrd', {
                 storeIzq.remove(selection);
 
                 var par = {product_id:selection.data.id,provider_id:pveid};
-                           var ajax = app.controller.std.Glob.ajax,
-                           json = ajax('POST', 'products_providers',par);
+                json = ajax('POST', 'products_providers',par);
 
 
-                           break;
-                           case 'todoDerecha':
-                           var dataIzq = gridIzq.store.data;
-                           dataIzq.each( function(record){
-                           storeDer.add(record.data);
-                          });
+                break;
+            case 'todoDerecha':
+                var dataIzq = gridIzq.store.data;
+                dataIzq.each( function(record){
+                    storeDer.add(record.data);
+                });
                 storeIzq.removeAll();
                 break;
             case 'izquierda':
@@ -252,6 +252,10 @@ Ext.define('app.view.procesos.pveprd.PvePrd', {
                 storeIzq.add(selection.data);
                 gridDer.getView().getSelectionModel().selectNext();
                 storeDer.remove(selection);
+
+                var par = {product_id:selection.data.id,provider_id:pveid};
+                json = ajax('POST', 'products_providers/detach_product',par);
+
                 break;
             case 'todoIzquierda':
                 var dataDer = gridDer.store.data;

@@ -39,7 +39,7 @@ Ext.define('app.view.procesos.pvetec.PveTec', {
     items: [
         {
             xtype: 'label',
-            text: 'Asocianción Proveedores Técnico'
+            text: 'Asocianción Proveedores Tecnicos'
         },
         {
             xtype: 'container',
@@ -87,7 +87,7 @@ Ext.define('app.view.procesos.pvetec.PveTec', {
                     xtype: 'pveprdgrid',
                     flex: 1,
                     itemId: 'gridIzq',
-                    title: 'Disponibles'
+                    title: 'Tecnicos sin Asociar '
                 },
                 {
                     xtype: 'toolbar',
@@ -150,7 +150,7 @@ Ext.define('app.view.procesos.pvetec.PveTec', {
                     xtype: 'pveprdgrid',
                     flex: 1,
                     itemId: 'gridDer',
-                    title: 'Seleccionados'
+                    title: 'Tecnicos Asociados'
                 }
             ]
         }
@@ -225,6 +225,8 @@ Ext.define('app.view.procesos.pvetec.PveTec', {
             storeDer = gridDer.store,
             storeIzq = gridIzq.store;
 
+
+        var ajax = app.controller.std.Glob.ajax;
         switch(opcion){
             case 'derecha':
                 var  selection = gridIzq.getView().getSelectionModel().getSelection()[0];
@@ -232,17 +234,14 @@ Ext.define('app.view.procesos.pvetec.PveTec', {
                 gridIzq.getView().getSelectionModel().selectNext();
                 storeIzq.remove(selection);
 
-                var par = {technician_id:selection.data.id,provider_id:pveid};
-                           var ajax = app.controller.std.Glob.ajax,
-                           json = ajax('POST', 'providers/associate_technician',par);
 
-
-                           break;
-                           case 'todoDerecha':
-                           var dataIzq = gridIzq.store.data;
-                           dataIzq.each( function(record){
-                           storeDer.add(record.data);
-                          });
+                json = ajax('POST', 'providers/associate_technician',par);
+                break;
+            case 'todoDerecha':
+                var dataIzq = gridIzq.store.data;
+                dataIzq.each( function(record){
+                    storeDer.add(record.data);
+                });
                 storeIzq.removeAll();
                 break;
             case 'izquierda':
@@ -250,6 +249,9 @@ Ext.define('app.view.procesos.pvetec.PveTec', {
                 storeIzq.add(selection.data);
                 gridDer.getView().getSelectionModel().selectNext();
                 storeDer.remove(selection);
+
+                var par = {technician_id:selection.data.id,provider_id:pveid};
+                json = ajax('POST', 'providers/detach_technician',par);
                 break;
             case 'todoIzquierda':
                 var dataDer = gridDer.store.data;

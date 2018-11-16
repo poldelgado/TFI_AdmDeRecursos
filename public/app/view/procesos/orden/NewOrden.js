@@ -36,6 +36,7 @@ Ext.define('app.view.procesos.orden.NewOrden', {
     modal: true,
     width: 669,
     title: 'Nuevo/Editar',
+    defaultListenerScope: true,
 
     layout: {
         type: 'vbox',
@@ -143,6 +144,19 @@ Ext.define('app.view.procesos.orden.NewOrden', {
                 }
             ]
         }
-    ]
+    ],
+    listeners: {
+        afterrender: 'onWindowAfterRender'
+    },
+
+    onWindowAfterRender: function(component, eOpts) {
+        var store1 = Ext.getStore('productos');
+        store1.load();
+
+        var store2 = Ext.getStore('proveedores');
+        store2.load();
+
+
+    }
 
 });
