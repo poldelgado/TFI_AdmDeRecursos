@@ -156,13 +156,13 @@ class ProviderController extends Controller {
         if (isset($provider)) {
             $providerInfo['cuit'] = $provider->cuit;
             $providerInfo['name'] = $provider->name;
-			
-			$technicians = $provider->technicians;
-			foreach ($technicians as $technician) {
-				$technician->name =  $technician->last_name.', '.$technician->first_name;
-			}
-			
-            $providerInfo['technicians'] = $technicians ;
+
+            $technicians = $provider->technicians;
+            foreach ($technicians as $technician) {
+                $technician->name = $technician->last_name . ', ' . $technician->first_name;
+            }
+
+            $providerInfo['technicians'] = $technicians;
             return $this->renderJson(true, $providerInfo, 'Técnicos de Proveedor');
         }
 
@@ -182,5 +182,31 @@ class ProviderController extends Controller {
         }
 
         return $this->renderJson(true, null, 'Ocurrió un error al desasociar el Técnico con el Proveedor');
+    }
+
+    public function graphic1() {
+        $providers = Provider::all();
+        $providersInfo = [];
+
+        foreach ($providers as $provider) {
+            $qualification = 0;
+            $countOrders = 0;
+            $average = 0;
+
+            foreach ($provider->purchaseOrders as $purchaseOrder) {
+                if (isset($purchaseOrder->purchase_qualification)) {
+                    $qualification += $purchaseOrder->purchase_qualification->average;
+                    $countOrders ++;
+                }
+            }
+            if ($countOrders > 0) {
+                $average = round($qualification / $countOrders,2);
+            }
+            $providersInfo[] = [
+                'provider_name' => $provider->name,
+                'provider_qualification' => $average,
+            ];
+        }
+        return $this->renderJson(true, $providersInfo, 'Calificaciones de proveedores');
     }
 }
